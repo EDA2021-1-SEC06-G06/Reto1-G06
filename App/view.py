@@ -34,12 +34,17 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- REQ. 1: Encontrar buenos videos por categoría y país")
+    print("3- REQ. 2: Encontrar video tendencia por país")
+    print("4- REQ. 3: Encontrar video tendencia por categoría")
+    print("5- REQ. 4: Buscar los videos con más Likes")
 
 catalog = None
+
 
 """
 Menu principal
