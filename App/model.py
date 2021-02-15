@@ -40,6 +40,7 @@ los mismos.
 
 def newCatalog():
     """
+    Inicializa el catálogo de videos.
     """
 
     catalog = {
@@ -49,7 +50,7 @@ def newCatalog():
     
     catalog['videos'] = lt.newList()
 
-    catalog['category_id'] = lt.newList('SINGLE_LINKED', cmpfunction=None)  #TODO: Cambiar cmpfunction
+    catalog['category_id'] = lt.newList('ARRAY_LIST', cmpfunction=None)  #TODO: Cambiar cmpfunction
 
     return catalog
 
@@ -58,44 +59,41 @@ def newCatalog():
 
 
 def addVideo(catalog, video):
-    #Se adiciona el video a la lista de videos
+
     lt.addLast(catalog['videos'], video)
 
 
-def addVideoId(catalog, id_category, video):
+
+def addCategoryID(catalog, id_):
     """
     """
-    todos_category_ids = catalog['category_id']
 
-    posID = lt.isPresent(todos_category_ids, id_category)
+    i = newCategoryID(id_['category_id'])
+    lt.addLast(catalog['category_id'], i)
 
-    if posID > 0:
-        cat_id = lt.getElement(todos_category_ids, posID)
-    
-    else:
-        cat_id = newCategoryId(id_category)
-        lt.addLast(todos_category_ids, cat_id)
-    
-    lt.addLast(cat_id['videos'], video)
 
 
 # Funciones para creacion de datos
 
 
-def newCategoryId(new_id):
+def newCategoryID(name, id_):
     """
     """
 
-    category = {'name': '', 'videos': None, 'id': new_id} #TODO: De pronto toca agregar algo, newAuthor
+    category = {'name': '', 'category_id': ''}
 
-    category['id'] = new_id
-    
-
-
+    category['name'] = name
+    category['category_id'] = id_
 
 
 # Funciones de consulta
 
+
 # Funciones utilizadas para comparar elementos dentro de una lista
+def comparecategoryname(name, id_):
+    return (name == id_['name'])
 
 # Funciones de ordenamiento
+
+def sortVideos(catalog):
+    sa.sort(catalog['videos'], comparecategoryname)
