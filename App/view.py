@@ -43,6 +43,14 @@ def printMenu():
     print("4- REQ. 3: Encontrar video tendencia por categoría")
     print("5- REQ. 4: Buscar los videos con más Likes")
 
+
+def initCatalog():
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    controller.loadData(catalog)
+
 catalog = None
 
 
@@ -54,6 +62,14 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+
+        catalog = initCatalog()
+
+        loadData(catalog)
+
+        print("Videos: {0}".format(lt.size(catalog['videos'])))
+        print("Categorias: {0}".format(lt.size(catalog['category_id'])))
+
 
     elif int(inputs[0]) == 2:
         pass

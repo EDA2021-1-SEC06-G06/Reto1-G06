@@ -50,7 +50,7 @@ def newCatalog():
     
     catalog['videos'] = lt.newList()
 
-    catalog['category_id'] = lt.newList('ARRAY_LIST', cmpfunction=None)  #TODO: Cambiar cmpfunction
+    catalog['category_id'] = lt.newList('SINGLE_LINKED', cmpfunction=compareCategoryName)  #TODO: Cambiar cmpfunction
 
     return catalog
 
@@ -64,11 +64,11 @@ def addVideo(catalog, video):
 
 
 
-def addCategoryID(catalog, id_):
+def addCategoryID(catalog, category):
     """
     """
 
-    i = newCategoryID(id_['category_id'])
+    i = newCategoryID(category['name'], category['id'])
     lt.addLast(catalog['category_id'], i)
 
 
@@ -85,15 +85,17 @@ def newCategoryID(name, id_):
     category['name'] = name
     category['category_id'] = id_
 
+    return category
+
 
 # Funciones de consulta
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-def compareCategoryName(name, id_):
-    return (name == id_['name'])
+def compareCategoryName(name, category):
+    return (name == category['category_id'])
 
 # Funciones de ordenamiento
 
 def sortVideos(catalog):
-    sa.sort(catalog['videos'], comparecategoryname)
+    sa.sort(catalog['videos'], compareCategoryName)

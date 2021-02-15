@@ -60,7 +60,7 @@ def loadCategoryID(catalog):
     referencia al libro que se esta procesando.
     """
     categoryfile = cf.data_dir + 'videos/category-id.csv'
-    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'))
+    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter="\t")
     for category in input_file:
         model.addCategoryID(catalog, category)
 
@@ -75,6 +75,7 @@ def loadVideos(catalog):
         model.addVideo(catalog, video)
 
 # Funciones de ordenamiento
+
 
 def sortVideos(catalog):
     """
