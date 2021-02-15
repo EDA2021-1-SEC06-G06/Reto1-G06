@@ -37,9 +37,62 @@ los mismos.
 
 # Construccion de modelos
 
+
+def newCatalog():
+    """
+    """
+
+    catalog = {
+        'videos': None,
+        'category_id': None,
+        }
+    
+    catalog['videos'] = lt.newList()
+
+    catalog['category_id'] = lt.newList('SINGLE_LINKED', cmpfunction=None)  #TODO: Cambiar cmpfunction
+
+    return catalog
+
+
 # Funciones para agregar informacion al catalogo
 
+
+def addVideo(catalog, video):
+    #Se adiciona el video a la lista de videos
+    lt.addLast(catalog['videos'], video)
+
+
+def addVideoId(catalog, id_category, video):
+    """
+    """
+    todos_category_ids = catalog['category_id']
+
+    posID = lt.isPresent(todos_category_ids, id_category)
+
+    if posID > 0:
+        cat_id = lt.getElement(todos_category_ids, posID)
+    
+    else:
+        cat_id = newCategoryId(id_category)
+        lt.addLast(todos_category_ids, cat_id)
+    
+    lt.addLast(cat_id['videos'], video)
+
+
 # Funciones para creacion de datos
+
+
+def newCategoryId(new_id):
+    """
+    """
+
+    category = {'name': '', 'videos': None, 'id': new_id} #TODO: De pronto toca agregar algo, newAuthor
+
+    category['id'] = new_id
+    
+
+
+
 
 # Funciones de consulta
 
