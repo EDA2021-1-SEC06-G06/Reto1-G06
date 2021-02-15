@@ -30,17 +30,22 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
+
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+
 
 # Construccion de modelos
 
 
 def newCatalog():
     """
-    Inicializa el catálogo de videos.
+    Inicializa el catálogo de videos. Crea una lista vacía para guardar
+    todos los videos. Adicionalmente, crea una lista vacía para las categorías.
+    
+    Retorna el catálogo inicializado
     """
 
     catalog = {
@@ -48,9 +53,11 @@ def newCatalog():
         'category_id': None,
         }
     
+    # Se crean las listas bajo esas llaves
     catalog['videos'] = lt.newList()
 
-    catalog['category_id'] = lt.newList('SINGLE_LINKED', cmpfunction=compareCategoryName)  #TODO: Cambiar cmpfunction
+    # Se puede cambiar el cmpfunction
+    catalog['category_id'] = lt.newList('SINGLE_LINKED', cmpfunction=compareCategoryName) # TODO: Single o array
 
     return catalog
 
@@ -59,18 +66,22 @@ def newCatalog():
 
 
 def addVideo(catalog, video):
+    """
+    Adiciona un video a la lista de videos.
+    """
 
+    # Se adiciona el vidieo en la última posición de la lista de videos.
     lt.addLast(catalog['videos'], video)
-
 
 
 def addCategoryID(catalog, category):
     """
+    Adiciona una categoría a la lista de categorías.
     """
-
+    # Se crea la nueva categoría
     i = newCategoryID(category['name'], category['id'])
+    
     lt.addLast(catalog['category_id'], i)
-
 
 
 # Funciones para creacion de datos
@@ -78,6 +89,7 @@ def addCategoryID(catalog, category):
 
 def newCategoryID(name, id_):
     """
+    Esta estructura almacena las categorías utilizadas para marcar videos.
     """
 
     category = {'name': '', 'category_id': ''}
@@ -92,10 +104,16 @@ def newCategoryID(name, id_):
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+
 def compareCategoryName(name, category):
+
     return (name == category['category_id'])
+
 
 # Funciones de ordenamiento
 
+
 def sortVideos(catalog):
+
     sa.sort(catalog['videos'], compareCategoryName)
