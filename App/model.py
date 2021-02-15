@@ -90,7 +90,7 @@ def newCategoryID(name, id_):
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-def comparecategoryname(name, id_):
+def compareCategoryName(name, id_):
     return (name == id_['name'])
 
 # Funciones de ordenamiento

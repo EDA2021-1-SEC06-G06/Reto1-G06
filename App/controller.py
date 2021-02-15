@@ -62,7 +62,7 @@ def loadCategoryID(catalog):
     categoryfile = cf.data_dir + 'videos/category-id.csv'
     input_file = csv.DictReader(open(categoryfile, encoding='utf-8'))
     for category in input_file:
-        model.addCategory(catalog, category)
+        model.addCategoryID(catalog, category)
 
 
 def loadVideos(catalog):
@@ -72,7 +72,7 @@ def loadVideos(catalog):
     videosfile = cf.data_dir + 'videos/videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
-        model.addVideos(catalog, video)
+        model.addVideo(catalog, video)
 
 # Funciones de ordenamiento
 
