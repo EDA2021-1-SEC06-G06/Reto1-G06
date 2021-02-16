@@ -30,7 +30,7 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 
-# Inicialización del Catálogo de libros
+# Inicialización del Catálogo de vídeos
 
 def initCatalog():
     """
@@ -55,9 +55,7 @@ def loadData(catalog):
 
 def loadCategoryID(catalog):
     """
-    Carga los libros del archivo.  Por cada libro se toman sus autores y por
-    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
-    referencia al libro que se esta procesando.
+    Carga las categorías del archivo.
     """
     categoryfile = cf.data_dir + 'videos/category-id.csv'
     input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter="\t")
@@ -67,9 +65,9 @@ def loadCategoryID(catalog):
 
 def loadVideos(catalog):
     """
-    Carga todos los tags del archivo y los agrega a la lista de tags
+    Carga todos los vídeos del archivo y los agrega a la lista de vídeos
     """
-    videosfile = cf.data_dir + 'videos/videos-small.csv'
+    videosfile = cf.data_dir + 'videos/videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
@@ -79,31 +77,6 @@ def loadVideos(catalog):
 
 def sortVideos(catalog):
     """
-    Ordena los libros por average_rating
+    Ordena los vídeos.
     """
     model.sortVideos(catalog)
-
-
-# Funciones de consulta sobre el catálogo
-
-def getBooksByAuthor(catalog, authorname):
-    """
-    Retrona los libros de un autor
-    """
-    author = model.getBooksByAuthor(catalog, authorname)
-    return author
-
-
-def getBestBooks(catalog, number):
-    """
-    Retorna los mejores libros
-    """
-    bestbooks = model.getBestBooks(catalog, number)
-    return bestbooks
-
-
-def countBooksByTag(catalog, tag):
-    """
-    Retorna los libros que fueron etiquetados con el tag
-    """
-    return model.countBooksByTag(catalog, tag)

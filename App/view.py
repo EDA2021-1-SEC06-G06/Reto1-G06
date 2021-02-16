@@ -23,6 +23,7 @@
 import config as cf
 import sys
 import controller
+import time
 from DISClib.ADT import list as lt
 assert cf
 
@@ -70,7 +71,7 @@ while True:
     
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        t_1 = time.process_time_ns()
         # Se inicializa el catálogo.
         catalog = initCatalog()
 
@@ -80,7 +81,8 @@ while True:
         print("Videos: {0}".format(lt.size(catalog['videos'])))
         
         print("Categorias: {0}".format(lt.size(catalog['category_id'])))
-
+        t_2 = time.process_time_ns()
+        print("El tiempo total fue de: ", str(t_2 - t_1))
     elif int(inputs[0]) == 2:
         pass
 
