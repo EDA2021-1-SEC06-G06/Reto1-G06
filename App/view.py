@@ -23,7 +23,6 @@
 import config as cf
 import sys
 import controller
-import time
 from DISClib.ADT import list as lt
 assert cf
 
@@ -43,6 +42,7 @@ def printMenu():
     print("3- REQ. 2: Encontrar video tendencia por país")
     print("4- REQ. 3: Encontrar video tendencia por categoría")
     print("5- REQ. 4: Buscar los videos con más Likes")
+    print("0- Salir")
 
 
 def initCatalog():
@@ -71,18 +71,17 @@ while True:
     
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        t_1 = time.process_time_ns()
+
         # Se inicializa el catálogo.
         catalog = initCatalog()
 
         # Se cargan los videos en la estructura de datos.
         loadData(catalog)
 
-        print("Videos: {0}".format(lt.size(catalog['videos'])))
+        print("Videos cargados: {0}".format(lt.size(catalog['videos'])))
         
-        print("Categorias: {0}".format(lt.size(catalog['category_id'])))
-        t_2 = time.process_time_ns()
-        print("El tiempo total fue de: ", str(t_2 - t_1))
+        print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
+
     elif int(inputs[0]) == 2:
         pass
 

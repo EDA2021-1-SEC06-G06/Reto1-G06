@@ -32,8 +32,8 @@ assert cf
 
 
 """
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
+Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las 
+categorias de los mismos.
 """
 
 
@@ -57,7 +57,7 @@ def newCatalog():
     catalog['videos'] = lt.newList()
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList('ARRAY_LIST', cmpfunction=compareCategoryName) # TODO: Single o array
+    catalog['category_id'] = lt.newList('ARRAY_LIST', cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
 
     return catalog
 
@@ -106,8 +106,8 @@ def newCategoryID(name, id_):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 
-def compareCategoryName(name, category):
-
+def compareCategoryName(name, category):  # Posible función de comparación para los requerimientos
+    
     return (name == category['category_id'])
 
 
