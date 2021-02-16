@@ -57,7 +57,7 @@ def newCatalog():
     catalog['videos'] = lt.newList()
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList('SINGLE_LINKED', cmpfunction=compareCategoryName) # TODO: Single o array
+    catalog['category_id'] = lt.newList('ARRAY_LIST', cmpfunction=compareCategoryName) # TODO: Single o array
 
     return catalog
 
