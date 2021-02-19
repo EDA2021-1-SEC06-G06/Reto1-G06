@@ -27,6 +27,7 @@
 
 import config as cf
 from DISClib.ADT import list as lt
+import time
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -114,6 +115,17 @@ def newCategoryID(name, id_):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
+def cmpVideosByViews(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Args:
+        video1: informacion del primer video que incluye su valor 'views'
+        video2: informacion del segundo video que incluye su valor 'views'
+    """
+
+    return (float(video1['views']) < float(video2['views']))
+
+
 
 def compareCategoryName(name, category):  # Posible función de comparación para los requerimientos
     
@@ -123,6 +135,22 @@ def compareCategoryName(name, category):  # Posible función de comparación par
 # Funciones de ordenamiento
 
 
-def sortVideos(catalog):
+def sortVideos(catalog, size):
 
-    sa.sort(catalog['videos'], compareCategoryName)
+    if size <= lt.size(catalog['videos']):
+
+        sub_list = lt.subList(catalog['videos'], 0, size)
+        sub_list = sub_list.copy()
+
+        start_time = time.process_time()
+
+        sorted_list = sa.sort(sub_list, cmpVideosByViews)
+        stop_time = time.process_time()
+
+        elapsed_time_mseg = (stop_time - start_time)*1000
+
+        return elapsed_time_mseg, sorted_list
+    
+    else:
+
+        return None, None
