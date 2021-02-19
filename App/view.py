@@ -101,8 +101,11 @@ while True:
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
 
     elif int(inputs[0]) == 2:
+
+        algoritmoOrder = input("Elija el algoritmo de ordenamiento:\n(1) Selection\n(2) Insertion\n(3) Shell\n~")
+
         size = input("Indique el tamaño de la muestra:\n")
-        result = controller.sortVideos(catalog, int(size))
+        result = controller.sortVideos(catalog, int(size), int(algoritmoOrder))
 
         print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
 

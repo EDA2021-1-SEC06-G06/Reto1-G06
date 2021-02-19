@@ -29,6 +29,8 @@ import config as cf
 from DISClib.ADT import list as lt
 import time
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort #Para no enredarnos
+from DISClib.Algorithms.Sorting import selectionsort
 assert cf
 
 
@@ -135,7 +137,7 @@ def compareCategoryName(name, category):  # Posible función de comparación par
 # Funciones de ordenamiento
 
 
-def sortVideos(catalog, size):
+def sortVideos(catalog, size: int, algoritmoOrder: int):
 
     if size <= lt.size(catalog['videos']):
 
@@ -144,7 +146,22 @@ def sortVideos(catalog, size):
 
         start_time = time.process_time()
 
-        sorted_list = sa.sort(sub_list, cmpVideosByViews)
+        if algoritmoOrder == 1:
+
+            sorted_list = selectionsort.sort(sub_list, cmpVideosByViews)
+        
+        elif algoritmoOrder == 2:
+
+            sorted_list = insertionsort.sort(sub_list, cmpVideosByViews)
+        
+        elif algoritmoOrder == 3:
+
+            sorted_list = sa.sort(sub_list, cmpVideosByViews)
+        
+        else:
+
+            print("Algoritmo no encontrado")
+
         stop_time = time.process_time()
 
         elapsed_time_mseg = (stop_time - start_time)*1000
