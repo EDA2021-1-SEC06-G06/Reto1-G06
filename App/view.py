@@ -45,6 +45,23 @@ def printMenu():
     print("0- Salir")
 
 
+def printResults(ord_videos, sample=10):
+    size = lt.size(ord_videos)
+
+    if size > sample:
+        print("Los primeros {0} vídeos ordenados son:".format(sample))
+
+        i = 0 
+
+        while i <= sample:
+
+            video = lt.getElement(ord_videos, i)
+
+            print("Fecha de tendencia: {0}   Título: {1}   Canal: {2}   Fecha de publicación: {3}   Visitas: {4}   Likes: {5}   Dislikes: {6}".format(video['trending_date'], video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes']))
+
+            i += 1
+
+
 def initCatalog(tipoDeLista: int):
     """
     Inicializa el catálogo de videos.
@@ -84,7 +101,12 @@ while True:
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
 
     elif int(inputs[0]) == 2:
-        pass
+        size = input("Indique el tamaño de la muestra:\n")
+        result = controller.sortVideos(catalog, int(size))
+
+        print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
+
+        printResults(result[1])
 
     else:
         sys.exit(0)

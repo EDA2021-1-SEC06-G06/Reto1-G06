@@ -50,7 +50,6 @@ def loadData(catalog):
     """
     loadCategoryID(catalog)
     loadVideos(catalog)
-    sortVideos(catalog)
 
 
 def loadCategoryID(catalog):
@@ -75,8 +74,10 @@ def loadVideos(catalog):
 # Funciones de ordenamiento
 
 
-def sortVideos(catalog):
+def sortVideos(catalog, size):
     """
     Ordena los vídeos.
     """
-    model.sortVideos(catalog)
+    
+    return model.sortVideos(catalog, size)
+
