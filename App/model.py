@@ -40,13 +40,22 @@ categorias de los mismos.
 # Construccion de modelos
 
 
-def newCatalog():
+def newCatalog(tipoDeLista: int):
     """
     Inicializa el catálogo de videos. Crea una lista vacía para guardar
     todos los videos. Adicionalmente, crea una lista vacía para las categorías.
     
     Retorna el catálogo inicializado
     """
+
+    if tipoDeLista == 1:
+        tipoDeLista = 'ARRAY_LIST'
+    
+    elif tipoDeLista == 2:
+        tipoDeLista = 'SINGLE_LINKED'
+    
+    else:
+        print("¡Opción inválida!")
 
     catalog = {
         'videos': None,
@@ -57,7 +66,7 @@ def newCatalog():
     catalog['videos'] = lt.newList()
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList('ARRAY_LIST', cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
+    catalog['category_id'] = lt.newList(tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
 
     return catalog
 

@@ -45,11 +45,11 @@ def printMenu():
     print("0- Salir")
 
 
-def initCatalog():
+def initCatalog(tipoDeLista: int):
     """
     Inicializa el catálogo de videos.
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipoDeLista)
 
 
 def loadData(catalog):
@@ -71,9 +71,10 @@ while True:
     
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-
+        tipoDeLista = int(input("¿Qué tipo de representación de lista desea? (escriba el número):\n(1)-ARRAY_LIST\n(2)-SINGLE_LINKED\n~"))
+        
         # Se inicializa el catálogo.
-        catalog = initCatalog()
+        catalog = initCatalog(tipoDeLista)
 
         # Se cargan los videos en la estructura de datos.
         loadData(catalog)
