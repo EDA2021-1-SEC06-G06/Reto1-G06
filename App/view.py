@@ -51,7 +51,7 @@ def printResults(ord_videos, sample=10):
     if size > sample:
         print("Los primeros {0} vídeos ordenados son:".format(sample))
 
-        i = 0 
+        i = 1
 
         while i <= sample:
 
