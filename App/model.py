@@ -66,10 +66,10 @@ def newCatalog(tipoDeLista: int):
         }
     
     # Se crean las listas bajo esas llaves
-    catalog['videos'] = lt.newList()
+    catalog['videos'] = lt.newList(datastructure=tipoDeLista)
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList(tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
+    catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
 
     return catalog
 
