@@ -69,7 +69,15 @@ def loadVideos(catalog):
     videosfile = cf.data_dir + 'videos/videos-large.csv'  # videos-large para la entrega
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
-        model.addVideo(catalog, video)
+        
+        filtered_video = {}  # Se deja como un dict en vez de OrderedDict porque consume más memoria
+
+        for llave in video:  # Ciclo para filtrar las columnas no utilizadas en el Reto
+
+            if llave in ['trending_date', 'title', 'channel_title', 'category_id', 'publish_time', 'views', 'likes', 'dislikes', 'country']:
+                filtered_video[llave] = video[llave]
+        
+        model.addVideo(catalog, filtered_video)
 
 # Funciones de ordenamiento
 
