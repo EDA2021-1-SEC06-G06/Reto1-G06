@@ -66,7 +66,7 @@ def newCatalog(tipoDeLista: int):
         }
     
     # Se crean las listas bajo esas llaves
-    catalog['videos'] = lt.newList(datastructure=tipoDeLista)
+    catalog['videos'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpVideosByViews)
 
     # Se puede cambiar el cmpfunction
     catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
@@ -125,7 +125,7 @@ def cmpVideosByViews(video1, video2):
         video2: informacion del segundo video que incluye su valor 'views'
     """
 
-    return (float(video1['views']) < float(video2['views']))
+    return (float(video1['views']) > float(video2['views']))
 
 
 
