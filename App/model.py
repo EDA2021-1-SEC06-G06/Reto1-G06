@@ -141,7 +141,7 @@ def sortVideos(catalog, size: int, algoritmoOrder: int):
 
     if size <= lt.size(catalog['videos']):
 
-        sub_list = lt.subList(catalog['videos'], 0, size)
+        sub_list = lt.subList(catalog['videos'], 1, size)
         sub_list = sub_list.copy()
 
         start_time = time.process_time()
