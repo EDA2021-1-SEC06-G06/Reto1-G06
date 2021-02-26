@@ -170,7 +170,7 @@ def sortVideos(catalog, size: int, algoritmoOrder: int):
         
         else:
 
-            print("Algoritmo no encontrado")
+            return("Algoritmo no encontrado")
 
         stop_time = time.process_time()
 
