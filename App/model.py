@@ -29,8 +29,10 @@ import config as cf
 from DISClib.ADT import list as lt
 import time
 from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.Algorithms.Sorting import insertionsort #Para no enredarnos
+from DISClib.Algorithms.Sorting import insertionsort
 from DISClib.Algorithms.Sorting import selectionsort
+from DISClib.Algorithms.Sorting import mergesort
+from DISClib.Algorithms.Sorting import quicksort
 assert cf
 
 
@@ -157,6 +159,14 @@ def sortVideos(catalog, size: int, algoritmoOrder: int):
         elif algoritmoOrder == 3:
 
             sorted_list = sa.sort(sub_list, cmpVideosByViews)
+        
+        elif algoritmoOrder == 4:
+
+            sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
+
+        elif algoritmoOrder == 5:
+
+            sorted_list = quicksort.sort(sub_list, cmpVideosByViews)
         
         else:
 

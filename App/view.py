@@ -90,7 +90,7 @@ while True:
     
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        tipoDeLista = int(input("¿Qué tipo de representación de lista desea? (escriba el número):\n(1)-ARRAY_LIST\n(2)-SINGLE_LINKED\n~"))
+        tipoDeLista = int(input("¿Qué tipo de representación de lista desea? (escriba el número):\n(1)-ARRAY_LIST\n(2)-SINGLE_LINKED\n~ "))
         
         # Se inicializa el catálogo.
         catalog = initCatalog(tipoDeLista)
@@ -104,7 +104,7 @@ while True:
 
     elif int(inputs[0]) == 2:
 
-        algoritmoOrder = input("Elija el algoritmo de ordenamiento:\n(1) Selection\n(2) Insertion\n(3) Shell\n~")
+        algoritmoOrder = input("Elija el algoritmo de ordenamiento:\n(1) Selection\n(2) Insertion\n(3) Shell\n(4) Merge\n(5) Quick\n~")
 
         size = input("Indique el tamaño de la muestra:\n")
         result = controller.sortVideos(catalog, int(size), int(algoritmoOrder))
