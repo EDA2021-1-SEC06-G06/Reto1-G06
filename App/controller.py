@@ -23,6 +23,7 @@
 import config as cf
 import model
 import csv
+import datetime as dt
 
 
 """
@@ -70,12 +71,18 @@ def loadVideos(catalog):
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         
-        filtered_video = {}  # Se deja como un dict en vez de OrderedDict porque consume más memoria
-
-        for llave in video:  # Ciclo para filtrar las columnas no utilizadas en el Reto
-
-            if llave in ['trending_date', 'title', 'channel_title', 'category_id', 'publish_time', 'views', 'likes', 'dislikes', 'country']:
-                filtered_video[llave] = video[llave]
+        filtered_video = {
+            'video_id': video['video_id'],
+            'trending_date': dt.datetime.strptime(video['trending_date'], '%y.%d.%m').date(),
+            'title': video['title'],
+            'channel_title': video['channel_title'],
+            'category_id': int(video['category_id']),
+            'publish_time': dt.datetime.strptime(video['publish_time'], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            'views': int(video['views']),
+            'likes': int(video['likes']),
+            'dislikes': int(video['dislikes']),
+            'country': video['country']
+        }  
         
         model.addVideo(catalog, filtered_video)
 
