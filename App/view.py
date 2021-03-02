@@ -70,6 +70,15 @@ def printCountryData(country):
         print("No se encontró el país")
 
 
+def printCategoryData(category):
+    if category:
+        print("Nombre: {0}".format(category['name']))
+        print("ID: {0}".format(category['ID']))
+        print('Total videos: {0}'.format(lt.size(category['videos'])))
+    else:
+        print("No se encontró la categoría")
+
+
 def initCatalog(tipoDeLista: int):
     """
     Inicializa el catálogo de videos.
@@ -109,6 +118,7 @@ while True:
         print("Videos cargados: {0}".format(lt.size(catalog['videos'])))
         
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
+        
 
     elif int(inputs[0]) == 2:
 
@@ -123,9 +133,14 @@ while True:
         countryName = input("Ingrese el nombre del país que desea:\n~ ")
         cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
 
-        country = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo
+        country = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo por países
+        print(country.keys())
+
+        category = controller.getVideosByCategory(country, category_name)  # Nuevo catálogo por categorías de los países
         
         result = controller.sortVideos(country, int(size), int(algoritmoOrder))  # filtro por views
+
+        #printCategoryData(category)
 
         printCountryData(country)
 

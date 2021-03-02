@@ -96,10 +96,19 @@ def addCategoryID(catalog, category):
     """
     # Se crea la nueva categoría
     i = newCategoryID(category['name'], category['id'])
-    
     lt.addLast(catalog['category_id'], i)
 
 
+def addCategoryVideo(catalog, categoryName, video):
+
+    categorias = catalog['category_id']
+    posCategory = lt.isPresent(categorias, categoryName)
+    
+    if posCategory > 0:
+        category = lt.getElement(categorias, posCategory)
+    lt.addLast(category['videos'], video)
+    
+    
 def addVideoCountry(catalog, countryName, video):
 
     paises = catalog['country']
@@ -119,10 +128,11 @@ def newCategoryID(name, id_):
     Esta estructura almacena las categorías utilizadas para marcar videos.
     """
 
-    category = {'name': '', 'category_id': ''}
+    category = {'name': '', 'category_id': '', 'videos': None}
 
     category['name'] = name
     category['category_id'] = id_
+    category['videos'] = lt.newList('ARRAY_LIST')
 
     return category
 
@@ -141,6 +151,15 @@ def getVideosByCountry(catalog, countryName):
     if posCountry > 0:
         country = lt.getElement(catalog['country'], posCountry)
         return country
+    return None
+
+
+def getVideosByCategory(catalog, categoryName):
+    
+    posCategory = lt.isPresent(catalog['category_id'], categoryName)
+    if posCategory > 0:
+        category = lt.getElement(catalog['category_id'], categoryName)
+        return category
     return None
 
 # Funciones utilizadas para comparar elementos dentro de una lista
@@ -162,6 +181,9 @@ def cmpByCountry(countryName1, countryname):
         return 0
     return -1
 
+
+def cmpByCategory(name, category):
+    return (name == category['name'])
 
 # Funciones de ordenamiento
 
