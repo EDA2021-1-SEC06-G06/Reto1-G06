@@ -53,7 +53,7 @@ def newCatalog(tipoDeLista: str):
     Retorna el catálogo inicializado
     """
 
-    tipoDeLista = 'ARRAY_LIST'
+    tipoDeLista = tipoDeLista
 
     catalog = {
         'videos': None,
@@ -89,6 +89,7 @@ def addCategoryID(catalog, category):
     """
     # Se crea la nueva categoría
     i = newCategoryID(category['name'], category['id'])
+    
     lt.addLast(catalog['category_id'], i)
 
 
@@ -102,7 +103,6 @@ def addVideoCountry(catalog, countryName, video):
         country = newCountry(countryName)
         lt.addLast(paises, country)
     lt.addLast(country['videos'], video)
-
 
 # Funciones para creacion de datos
 
@@ -126,8 +126,6 @@ def newCountry(countryName):
     country['name'] = countryName
     country['videos'] = lt.newList('ARRAY_LIST')
     return country
-
-
 # Funciones de consulta
 
 
@@ -138,8 +136,8 @@ def getVideosByCountry(catalog, countryName):
         return country
     return None
 
-
 # Funciones utilizadas para comparar elementos dentro de una lista
+
 
 def cmpVideosByViews(video1, video2):
     """
@@ -158,10 +156,6 @@ def cmpByCountry(countryName1, countryname):
     return -1
 
 
-def cmpByCategory(name, category):
-    return (name == category['name'])
-
-
 # Funciones de ordenamiento
 
 
@@ -175,7 +169,7 @@ def sortVideos(catalog, size: int):
         start_time = time.process_time()
 
         sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
-
+        
         stop_time = time.process_time()
 
         elapsed_time_mseg = (stop_time - start_time)*1000

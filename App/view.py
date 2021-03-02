@@ -113,15 +113,17 @@ while True:
     elif int(inputs[0]) == 2:
 
         size = input("Indique el tamaño de la muestra:\n")
+        
+        # Req 1
+
+        # Inputs del Usuario
         category_name = input("Ingrese el nombre de la categoría que desea:\n~ ")
         countryName = input("Ingrese el nombre del país que desea:\n~ ")
         cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
 
-        country = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo por países
-
-        result = controller.sortVideos(catalog, int(size))
-
-        #printCategoryData(category)
+        country = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo
+        
+        result = controller.sortVideos(country, int(size))  # filtro por views
 
         printCountryData(country)
 
