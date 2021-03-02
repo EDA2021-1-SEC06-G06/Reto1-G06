@@ -64,7 +64,7 @@ def newCatalog(tipoDeLista: str):
     catalog['videos'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpVideosByViews)
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpByCategory)  # la cmpfunction depende de lo que se necesite encontrar
+    catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
 
     catalog['country'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpByCountry)
 
@@ -92,16 +92,6 @@ def addCategoryID(catalog, category):
     lt.addLast(catalog['category_id'], i)
 
 
-def addCategoryVideo(catalog, categoryName, video):
-
-    categorias = catalog['category_id']
-    posCategory = lt.isPresent(categorias, categoryName)
-    
-    if posCategory > 0:
-        category = lt.getElement(categorias, posCategory)
-    lt.addLast(category['videos'], video)
-    
-    
 def addVideoCountry(catalog, countryName, video):
 
     paises = catalog['country']
@@ -113,6 +103,7 @@ def addVideoCountry(catalog, countryName, video):
         lt.addLast(paises, country)
     lt.addLast(country['videos'], video)
 
+
 # Funciones para creacion de datos
 
 
@@ -121,11 +112,10 @@ def newCategoryID(name, id_):
     Esta estructura almacena las categorías utilizadas para marcar videos.
     """
 
-    category = {'name': '', 'category_id': '', 'videos': None}
+    category = {'name': '', 'category_id': ''}
 
     category['name'] = name
     category['category_id'] = id_
-    category['videos'] = lt.newList('ARRAY_LIST')
 
     return category
 
@@ -136,6 +126,8 @@ def newCountry(countryName):
     country['name'] = countryName
     country['videos'] = lt.newList('ARRAY_LIST')
     return country
+
+
 # Funciones de consulta
 
 
@@ -147,16 +139,7 @@ def getVideosByCountry(catalog, countryName):
     return None
 
 
-def getVideosByCategory(catalog, categoryName):
-    
-    posCategory = lt.isPresent(catalog['category_id'], categoryName)
-    if posCategory > 0:
-        category = lt.getElement(catalog['category_id'], categoryName)
-        return category
-    return None
-
 # Funciones utilizadas para comparar elementos dentro de una lista
-
 
 def cmpVideosByViews(video1, video2):
     """
@@ -177,6 +160,7 @@ def cmpByCountry(countryName1, countryname):
 
 def cmpByCategory(name, category):
     return (name == category['name'])
+
 
 # Funciones de ordenamiento
 

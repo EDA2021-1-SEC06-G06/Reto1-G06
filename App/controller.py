@@ -82,11 +82,10 @@ def loadVideos(catalog):
             'likes': int(video['likes']),
             'dislikes': int(video['dislikes']),
             'country': video['country']
-        }
- 
+        }  
+        
         model.addVideo(catalog, filtered_video)
         model.addVideoCountry(catalog, filtered_video['country'], filtered_video)
-        
 
 # Funciones de ordenamiento
 
@@ -95,18 +94,9 @@ def sortVideos(catalog, size: int):
     """
     Ordena los vídeos.
     """
-    
     return model.sortVideos(catalog, size)
 
 
-# Funciones de consulta sobre el catálogo
-
 def getVideosByCountry(catalog, countryName):
     country = model.getVideosByCountry(catalog, countryName)
-
     return country
-
-
-def getVideosByCategory(catalog, categoryName):
-    category = model.getVideosByCategory(catalog, categoryName)
-    return category
