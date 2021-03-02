@@ -45,7 +45,7 @@ categorias de los mismos.
 # Construccion de modelos
 
 
-def newCatalog(tipoDeLista: int):
+def newCatalog(tipoDeLista: str):
     """
     Inicializa el catálogo de videos. Crea una lista vacía para guardar
     todos los videos. Adicionalmente, crea una lista vacía para las categorías.
@@ -53,14 +53,7 @@ def newCatalog(tipoDeLista: int):
     Retorna el catálogo inicializado
     """
 
-    if tipoDeLista == 1:
-        tipoDeLista = 'ARRAY_LIST'
-    
-    elif tipoDeLista == 2:
-        tipoDeLista = 'SINGLE_LINKED'
-    
-    else:
-        print("¡Opción inválida!")
+    tipoDeLista = 'ARRAY_LIST'
 
     catalog = {
         'videos': None,
@@ -188,7 +181,7 @@ def cmpByCategory(name, category):
 # Funciones de ordenamiento
 
 
-def sortVideos(catalog, size: int, algoritmoOrder: int):
+def sortVideos(catalog, size: int):
 
     if size <= lt.size(catalog['videos']):
 
@@ -197,29 +190,7 @@ def sortVideos(catalog, size: int, algoritmoOrder: int):
 
         start_time = time.process_time()
 
-        if algoritmoOrder == 1:
-
-            sorted_list = selectionsort.sort(sub_list, cmpVideosByViews)
-        
-        elif algoritmoOrder == 2:
-
-            sorted_list = insertionsort.sort(sub_list, cmpVideosByViews)
-        
-        elif algoritmoOrder == 3:
-
-            sorted_list = sa.sort(sub_list, cmpVideosByViews)
-        
-        elif algoritmoOrder == 4:
-
-            sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
-
-        elif algoritmoOrder == 5:
-
-            sorted_list = quicksort.sort(sub_list, cmpVideosByViews)
-        
-        else:
-
-            return("Algoritmo no encontrado")
+        sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
 
         stop_time = time.process_time()
 
