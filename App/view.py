@@ -62,6 +62,14 @@ def printResults(ord_videos, sample=10):
             i += 1
 
 
+def printCountryData(country):
+    if country:
+        print("Nombre: {0}".format(country['name']))
+        print('Total videos: {0}'.format(lt.size(country['videos'])))
+    else:
+        print("No se encontró el país")
+
+
 def initCatalog(tipoDeLista: int):
     """
     Inicializa el catálogo de videos.
@@ -107,11 +115,25 @@ while True:
         algoritmoOrder = input("Elija el algoritmo de ordenamiento:\n(1) Selection\n(2) Insertion\n(3) Shell\n(4) Merge\n(5) Quick\n~")
 
         size = input("Indique el tamaño de la muestra:\n")
-        result = controller.sortVideos(catalog, int(size), int(algoritmoOrder))
+        
+        # Req 1
+
+        # Inputs del Usuario
+        category_name = input("Ingrese el nombre de la categoría que desea:\n~ ")
+        countryName = input("Ingrese el nombre del país que desea:\n~ ")
+        cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
+
+        country = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo
+        
+        result = controller.sortVideos(country, int(size), int(algoritmoOrder))  # filtro por views
+
+        printCountryData(country)
 
         print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
 
-        printResults(result[1])
+        printResults(result[1], sample=cantidad_videos)
+        
+        
 
     else:
         sys.exit(0)

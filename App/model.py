@@ -71,7 +71,9 @@ def newCatalog(tipoDeLista: int):
     catalog['videos'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpVideosByViews)
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
+    catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpByCategory)  # la cmpfunction depende de lo que se necesite encontrar
+
+    catalog['country'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpByCountry)
 
     return catalog
 
@@ -98,6 +100,17 @@ def addCategoryID(catalog, category):
     lt.addLast(catalog['category_id'], i)
 
 
+def addVideoCountry(catalog, countryName, video):
+
+    paises = catalog['country']
+    poscountry = lt.isPresent(paises, countryName)
+    if poscountry > 0:
+        country = lt.getElement(paises, poscountry)
+    else:
+        country = newCountry(countryName)
+        lt.addLast(paises, country)
+    lt.addLast(country['videos'], video)
+
 # Funciones para creacion de datos
 
 
@@ -114,10 +127,24 @@ def newCategoryID(name, id_):
     return category
 
 
+def newCountry(countryName):
+
+    country = {'name': '', 'videos': None}
+    country['name'] = countryName
+    country['videos'] = lt.newList('ARRAY_LIST')
+    return country
 # Funciones de consulta
 
 
+def getVideosByCountry(catalog, countryName):
+    posCountry = lt.isPresent(catalog['country'], countryName)
+    if posCountry > 0:
+        country = lt.getElement(catalog['country'], posCountry)
+        return country
+    return None
+
 # Funciones utilizadas para comparar elementos dentro de una lista
+
 
 def cmpVideosByViews(video1, video2):
     """
@@ -130,10 +157,10 @@ def cmpVideosByViews(video1, video2):
     return (float(video1['views']) > float(video2['views']))
 
 
-
-def compareCategoryName(name, category):  # Posible función de comparación para los requerimientos
-    
-    return (name == category['category_id'])
+def cmpByCountry(countryName1, countryname):
+    if (countryName1.lower() in countryname['name'].lower()):
+        return 0
+    return -1
 
 
 # Funciones de ordenamiento
