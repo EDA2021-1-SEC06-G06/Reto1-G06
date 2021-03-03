@@ -28,11 +28,7 @@
 import config as cf
 from DISClib.ADT import list as lt
 import time
-from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.Algorithms.Sorting import insertionsort
-from DISClib.Algorithms.Sorting import selectionsort
 from DISClib.Algorithms.Sorting import mergesort
-from DISClib.Algorithms.Sorting import quicksort
 assert cf
 
 
@@ -45,7 +41,7 @@ categorias de los mismos.
 # Construccion de modelos
 
 
-def newCatalog(tipoDeLista: str):
+def newCatalog():
     """
     Inicializa el catálogo de videos. Crea una lista vacía para guardar
     todos los videos. Adicionalmente, crea una lista vacía para las categorías.
@@ -53,25 +49,22 @@ def newCatalog(tipoDeLista: str):
     Retorna el catálogo inicializado
     """
 
-    tipoDeLista = tipoDeLista
-
-    catalog = {
-        'videos': None,
-        'category_id': None,
-        }
+    catalog = {'videos': None, 'category_id': None, 'country': None}
     
     # Se crean las listas bajo esas llaves
-    catalog['videos'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpVideosByViews)
+    catalog['videos'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpVideosByViews)
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList(datastructure=tipoDeLista, cmpfunction=None)  # la cmpfunction depende de lo que se necesite encontrar
+    catalog['category_id'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpCategoriasByName)  
 
-    catalog['country'] = lt.newList(datastructure=tipoDeLista, cmpfunction=cmpByCountry)
+    catalog['country'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpByCountry)
 
     return catalog
 
 
+
 # Funciones para agregar informacion al catalogo
+
 
 
 def addVideo(catalog, video):
@@ -83,6 +76,8 @@ def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
 
 
+
+
 def addCategoryID(catalog, category):
     """
     Adiciona una categoría a la lista de categorías.
@@ -91,6 +86,8 @@ def addCategoryID(catalog, category):
     i = newCategoryID(category['name'], category['id'])
     
     lt.addLast(catalog['category_id'], i)
+
+
 
 
 def addVideoCountry(catalog, countryName, video):
@@ -104,7 +101,10 @@ def addVideoCountry(catalog, countryName, video):
         lt.addLast(paises, country)
     lt.addLast(country['videos'], video)
 
+
+
 # Funciones para creacion de datos
+
 
 
 def newCategoryID(name, id_):
@@ -120,13 +120,19 @@ def newCategoryID(name, id_):
     return category
 
 
+
+
 def newCountry(countryName):
 
     country = {'name': '', 'videos': None}
     country['name'] = countryName
     country['videos'] = lt.newList('ARRAY_LIST')
     return country
+
+
+
 # Funciones de consulta
+
 
 
 def getVideosByCountry(catalog, countryName):
@@ -136,7 +142,10 @@ def getVideosByCountry(catalog, countryName):
         return country
     return None
 
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
+
 
 
 def cmpVideosByViews(video1, video2):
@@ -150,13 +159,22 @@ def cmpVideosByViews(video1, video2):
     return (float(video1['views']) > float(video2['views']))
 
 
+
+
 def cmpByCountry(countryName1, countryname):
     if (countryName1.lower() in countryname['name'].lower()):
         return 0
     return -1
 
 
+
+def cmpCategoriasByName(name, category):
+    return (name == category['name'])
+
+
+
 # Funciones de ordenamiento
+
 
 
 def sortVideos(catalog, size: int):
@@ -172,7 +190,7 @@ def sortVideos(catalog, size: int):
         
         stop_time = time.process_time()
 
-        elapsed_time_mseg = (stop_time - start_time)*1000
+        elapsed_time_mseg = (stop_time - start_time) * 1000
 
         return elapsed_time_mseg, sorted_list
     

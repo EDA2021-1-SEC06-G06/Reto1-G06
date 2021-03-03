@@ -33,15 +33,19 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de vídeos
 
-def initCatalog(tipoDeLista: int):
+
+
+def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog(tipoDeLista)
+    catalog = model.newCatalog()
     return catalog
 
 
+
 # Funciones para la carga de datos
+
 
 
 def loadData(catalog):
@@ -53,6 +57,8 @@ def loadData(catalog):
     loadVideos(catalog)
 
 
+
+
 def loadCategoryID(catalog):
     """
     Carga las categorías del archivo.
@@ -61,6 +67,8 @@ def loadCategoryID(catalog):
     input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter="\t")
     for category in input_file:
         model.addCategoryID(catalog, category)
+
+
 
 
 def loadVideos(catalog):
@@ -88,7 +96,10 @@ def loadVideos(catalog):
         model.addVideo(catalog, filtered_video)
         model.addVideoCountry(catalog, filtered_video['country'], filtered_video)
 
+
+
 # Funciones de ordenamiento
+
 
 
 def sortVideos(catalog, size: int):
@@ -98,7 +109,10 @@ def sortVideos(catalog, size: int):
     return model.sortVideos(catalog, size)
 
 
+
 # Funciones de consulta sobre el catálogo
+
+
 
 def getVideosByCountry(catalog, countryName):
     country = model.getVideosByCountry(catalog, countryName)

@@ -35,6 +35,7 @@ operación solicitada
 """
 
 
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
@@ -43,6 +44,8 @@ def printMenu():
     print("4- REQ. 3: Encontrar video tendencia por categoría")
     print("5- REQ. 4: Buscar los videos con más Likes")
     print("0- Salir")
+
+
 
 
 def printResults(ord_videos, sample=10):
@@ -62,6 +65,8 @@ def printResults(ord_videos, sample=10):
             i += 1
 
 
+
+
 def printCountryData(country):
     if country:
         print("Nombre: {0}".format(country['name']))
@@ -70,11 +75,15 @@ def printCountryData(country):
         print("No se encontró el país")
 
 
-def initCatalog(tipoDeLista: int):
+
+
+def initCatalog():
     """
     Inicializa el catálogo de videos.
     """
-    return controller.initCatalog(tipoDeLista)
+    return controller.initCatalog()
+
+
 
 
 def loadData(catalog):
@@ -84,24 +93,30 @@ def loadData(catalog):
     controller.loadData(catalog)
 
 
+
+
 catalog = None
 default_limit = 1000
-sys.setrecursionlimit(default_limit*10)
+sys.setrecursionlimit(default_limit * 10)
+
 
 
 """
 Menu principal
 """
+
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     
+
+
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        tipoDeLista = 'ARRAY_LIST'
         
         # Se inicializa el catálogo.
-        catalog = initCatalog(tipoDeLista)
+        catalog = initCatalog()
 
         # Se cargan los videos en la estructura de datos.
         loadData(catalog)
@@ -110,26 +125,34 @@ while True:
         
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
 
+
+
     elif int(inputs[0]) == 2:
 
-        size = input("Indique el tamaño de la muestra:\n")
-        
-        # Req 1
-
-        # Inputs del Usuario
-        category_name = input("Ingrese el nombre de la categoría que desea:\n~ ")
         countryName = input("Ingrese el nombre del país que desea:\n~ ")
-        cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
 
-        country = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo
+        countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo
+
+        printCountryData(countryCatalog)  # Se imprime la cantidad de videos en countryCatalog
+
+
+        # Inputs secundarios del usuario
+        size = input("Indique el tamaño de la muestra:\n~ ")
         
-        result = controller.sortVideos(country, int(size))  # filtro por views
+        
+        categoryName = input("Ingrese el nombre de la categoría que desea:\n~ ")
+        
+        cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
+        
 
-        printCountryData(country)
+
+        result = controller.sortVideos(countryCatalog, int(size))  # Ordenamiento por views
 
         print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
 
         printResults(result[1], sample=cantidad_videos)
+
+
 
     else:
         sys.exit(0)
