@@ -92,14 +92,17 @@ def addCategoryID(catalog, category):
 
 def addVideoCountry(catalog, countryName, video):
 
-    paises = catalog['country']
-    poscountry = lt.isPresent(paises, countryName)
+    paises = catalog['country']  # paises es un dict que tiene como llaves los países
+
+    poscountry = lt.isPresent(paises, countryName)  # posición del país en paises
+    
     if poscountry > 0:
-        country = lt.getElement(paises, poscountry)
+        country = lt.getElement(paises, poscountry)  # si ya existe, retorna el array del dict
     else:
-        country = newCountry(countryName)
-        lt.addLast(paises, country)
-    lt.addLast(country['videos'], video)
+        country = newCountry(countryName)  # Si no existe, lo crea
+        lt.addLast(paises, country)  # lo agrega al final de paises
+
+    lt.addLast(country['videos'], video)  # agrega el vídeo en el país
 
 
 
@@ -115,7 +118,8 @@ def newCategoryID(name, id_):
     category = {'name': '', 'category_id': ''}
 
     category['name'] = name
-    category['category_id'] = id_
+    category['category_id'] = int(id_)
+    
 
     return category
 
@@ -126,7 +130,7 @@ def newCountry(countryName):
 
     country = {'name': '', 'videos': None}
     country['name'] = countryName
-    country['videos'] = lt.newList('ARRAY_LIST')
+    country['videos'] = lt.newList('ARRAY_LIST', cmpfunction=cmpVideosByViews)
     return country
 
 
@@ -135,12 +139,38 @@ def newCountry(countryName):
 
 
 
-def getVideosByCountry(catalog, countryName):
-    posCountry = lt.isPresent(catalog['country'], countryName)
+def getVideosByCountry(catalog, countryName: str):
+
+    posCountry = lt.isPresent(catalog['country'], countryName)  # recibo la posición del país en el catálogo
     if posCountry > 0:
-        country = lt.getElement(catalog['country'], posCountry)
+        country = lt.getElement(catalog['country'], posCountry)  # recibe el array del país que contiene el name y videos
         return country
     return None
+
+
+
+
+def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
+    """
+    Args:
+        catalog: Catálogo del país
+        categoryName: Nombre del país
+        categoryCatalog: Catálogo principal que contiene los category_id
+    """
+
+    id_, name = categoryNameToID(categoryCatalog, categoryName)  # del catálogo principal, cambia categoryName por su id
+
+    catalogo_filtrado = {'name': name, 'videos': None}
+    catalogo_filtrado['videos'] = lt.newList('ARRAY_LIST', cmpfunction=cmpVideosByViews)
+
+
+    for video in lt.iterator(catalog['videos']):  # Ciclo para iterar por cada video del catálogo
+        
+        if video['category_id'] == id_:
+
+            lt.addLast(catalogo_filtrado['videos'], video)  # se agrega al catálogo filtrado
+    
+    return catalogo_filtrado
 
 
 
@@ -148,9 +178,25 @@ def getVideosByCountry(catalog, countryName):
 
 
 
+def categoryNameToID(catalog, name: str):
+
+    id_ = None
+
+    for category in lt.iterator(catalog['category_id']):  # iteramos por las categorías del catálogo princpal
+
+        if category['name'].lower() == name.lower():
+
+            id_ = int(category['category_id'])
+            name = category['name']
+    
+            return (id_, name)
+
+
+
+
 def cmpVideosByViews(video1, video2):
     """
-    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Devuelve verdadero (True) si los 'views' de video1 son mayores que los del video2
     Args:
         video1: informacion del primer video que incluye su valor 'views'
         video2: informacion del segundo video que incluye su valor 'views'
@@ -162,6 +208,9 @@ def cmpVideosByViews(video1, video2):
 
 
 def cmpByCountry(countryName1, countryname):
+    """
+    Devuelve cero (0) si...
+    """
     if (countryName1.lower() in countryname['name'].lower()):
         return 0
     return -1
@@ -178,7 +227,7 @@ def cmpCategoriasByName(name, category):
 
 
 def sortVideos(catalog, size: int):
-
+    
     if size <= lt.size(catalog['videos']):
 
         sub_list = lt.subList(catalog['videos'], 1, size)

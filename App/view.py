@@ -76,6 +76,13 @@ def printCountryData(country):
 
 
 
+def printCategoryData(category):
+    if category:
+        print('Nombre: {0}'.format(category['name']))
+        print("Cantidad de vídeos en la categoría: {0}".format(lt.size(category['videos'])))
+    else:
+        print("No se encontró")
+
 
 def initCatalog():
     """
@@ -131,23 +138,31 @@ while True:
 
         countryName = input("Ingrese el nombre del país que desea:\n~ ")
 
-        countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo
-
-        printCountryData(countryCatalog)  # Se imprime la cantidad de videos en countryCatalog
+        countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
+      
 
 
         # Inputs secundarios del usuario
-        size = input("Indique el tamaño de la muestra:\n~ ")
+        
         
         
         categoryName = input("Ingrese el nombre de la categoría que desea:\n~ ")
+
+        categoryCatalog = controller.getVideosByCategory(countryCatalog, categoryName, catalog)  # Mirar parámetros
+
+        printCategoryData(categoryCatalog)  # Se imprime la información filtrada por categoría y país
+        
+
+
+        size = input("Indique el tamaño de la muestra:\n No puede ser mayor que el Total de videos de arriba\n~ ")
         
         cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
         
 
 
-        result = controller.sortVideos(countryCatalog, int(size))  # Ordenamiento por views
-
+        result = controller.sortVideos(categoryCatalog, int(size))  # Ordenamiento por views
+        
+        
         print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
 
         printResults(result[1], sample=cantidad_videos)

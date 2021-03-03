@@ -68,8 +68,9 @@ def loadCategoryID(catalog):
     for category in input_file:
         filtered_category = {
             'id': category['id'],
-            'name': category['name']
+            'name': (category['name']).replace(" ",'')  # quitar los espacios
         }
+
         model.addCategoryID(catalog, filtered_category)
 
 
@@ -121,3 +122,16 @@ def sortVideos(catalog, size: int):
 def getVideosByCountry(catalog, countryName):
     country = model.getVideosByCountry(catalog, countryName)
     return country
+
+
+
+def getVideosByCategory(catalog, categoryName, categoryCatalog):
+    """
+    Args:
+        catalog: Catálogo del país
+        categoryName: Nombre del país
+        categoryCatalog: Catálogo principal que contiene los category_id
+    """
+    
+    category = model.getVideosByCategory(catalog, categoryName, categoryCatalog)
+    return category
