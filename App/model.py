@@ -45,12 +45,12 @@ def newCatalog():
     """
     Inicializa el catálogo de videos. Crea una lista vacía para guardar
     todos los videos. Adicionalmente, crea una lista vacía para las categorías.
-    
+
     Retorna el catálogo inicializado
     """
 
     catalog = {'videos': None, 'category_id': None, 'country': None}
-    
+
     # Se crean las listas bajo esas llaves
     catalog['videos'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpVideosByViews)
 
@@ -84,7 +84,7 @@ def addCategoryID(catalog, category):
     """
     # Se crea la nueva categoría
     i = newCategoryID(category['name'], category['id'])
-    
+
     lt.addLast(catalog['category_id'], i)
 
 
@@ -95,7 +95,7 @@ def addVideoCountry(catalog, countryName, video):
     paises = catalog['country']  # paises es un dict que tiene como llaves los países
 
     poscountry = lt.isPresent(paises, countryName)  # posición del país en paises
-    
+
     if poscountry > 0:
         country = lt.getElement(paises, poscountry)  # si ya existe, retorna el array del dict
     else:
@@ -119,7 +119,7 @@ def newCategoryID(name, id_):
 
     category['name'] = name
     category['category_id'] = int(id_)
-    
+
 
     return category
 
@@ -170,14 +170,44 @@ def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
 
 
     for video in lt.iterator(catalog['videos']):  # Ciclo para iterar por cada video del catálogo
-        
+   
         if video['category_id'] == id_:
 
             lt.addLast(catalogo_filtrado['videos'], video)  # se agrega al catálogo filtrado
-    
+
     return catalogo_filtrado
 
 
+
+def countTrendingDatesForVideos(catalog):
+    """
+    Args:
+        catalog: Catálogo filtrado
+
+    Return:
+        video_mayor_dias: Video que ha tenido más días de tendencia.
+    """
+    video_ids_unicos = {'videos': {}}
+
+    max_dias = 0
+    mas_video = None
+
+    for video in lt.iterator(catalog['videos']):  # TODO: Ver si nos dejan
+
+        if video['title'] not in video_ids_unicos['videos'].keys():
+
+            video_ids_unicos['videos'][video['title']] = video
+    
+        else:
+            video_ids_unicos['videos'][video['title']]['dias_t'] += 1
+
+            if video_ids_unicos['videos'][video['title']]['dias_t'] > max_dias:
+
+                max_dias = video_ids_unicos['videos'][video['title']]['dias_t']
+
+                mas_video = video_ids_unicos['videos'][video['title']]
+
+    return mas_video
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -193,7 +223,7 @@ def categoryNameToID(catalog, name: str):
 
             id_ = int(category['category_id'])
             name = category['name']
-    
+
             return (id_, name)
 
 
@@ -227,12 +257,17 @@ def cmpCategoriasByName(name, category):
 
 
 
+def cmpVideosByTitle(title, video):
+    return (title == video['title'])
+
+
+
 # Funciones de ordenamiento
 
 
 
 def sortVideos(catalog, size: int):
-    
+
     if size <= lt.size(catalog['videos']):
 
         sub_list = lt.subList(catalog['videos'], 1, size)
@@ -241,13 +276,13 @@ def sortVideos(catalog, size: int):
         start_time = time.process_time()
 
         sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
-        
+
         stop_time = time.process_time()
 
         elapsed_time_mseg = (stop_time - start_time) * 1000
 
         return elapsed_time_mseg, sorted_list
-    
+
     else:
 
         return None, None

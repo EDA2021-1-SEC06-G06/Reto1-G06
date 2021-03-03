@@ -169,7 +169,7 @@ while True:
         categoryCatalog = controller.getVideosByCategory(countryCatalog, categoryName, catalog)  # Mirar parámetros
 
         printCategoryData(categoryCatalog)  # Se imprime la información filtrada por categoría y país
-        
+    
 
 
         size = input("Indique el tamaño de la muestra:\n No puede ser mayor que el Total de videos de arriba\n~ ")
@@ -179,11 +179,23 @@ while True:
 
 
         result = controller.sortVideos(categoryCatalog, int(size))  # Ordenamiento por views
-        
-        
+   
+    
         print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
 
         printResults(result[1], sample=cantidad_videos)
+
+
+    elif int(inputs[0]) == 4:
+
+        categoryName = 'Music'  # input
+
+        categoryCatalog = controller.getVideosByCategory(catalog, categoryName, catalog)
+
+        print(lt.size(categoryCatalog['videos']))
+
+        video = controller.countTrendingDatesForVideos(categoryCatalog)
+        print(video)
 
 
 

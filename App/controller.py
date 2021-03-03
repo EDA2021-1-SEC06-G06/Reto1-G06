@@ -68,7 +68,7 @@ def loadCategoryID(catalog):
     for category in input_file:
         filtered_category = {
             'id': category['id'],
-            'name': (category['name']).replace(" ",'')  # quitar los espacios
+            'name': (category['name']).replace(" ", '')  # quitar los espacios
         }
 
         model.addCategoryID(catalog, filtered_category)
@@ -80,7 +80,7 @@ def loadVideos(catalog):
     """
     Carga todos los vídeos del archivo y los agrega a la lista de vídeos
     """
-    videosfile = cf.data_dir + 'videos/videos-5pct.csv'  # videos-large para la entrega
+    videosfile = cf.data_dir + 'videos/videos-large.csv'  # videos-large para la entrega
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         
@@ -94,10 +94,11 @@ def loadVideos(catalog):
             'views': int(video['views']),
             'likes': int(video['likes']),
             'dislikes': int(video['dislikes']),
-            'country': video['country']
+            'country': video['country'],
+            'dias_t': 1
         }
 
-        
+       
         model.addVideo(catalog, filtered_video)
         model.addVideoCountry(catalog, filtered_video['country'], filtered_video)
 
@@ -134,7 +135,17 @@ def getVideosByCategory(catalog, categoryName, categoryCatalog):
         catalog: Catálogo del país
         categoryName: Nombre del país
         categoryCatalog: Catálogo principal que contiene los category_id
-    """
-    
+    """  
     category = model.getVideosByCategory(catalog, categoryName, categoryCatalog)
     return category
+
+
+
+# Funciones de operaciones sobre el catálogo
+
+
+
+def countTrendingDatesForVideos(catalog):
+
+    video = model.countTrendingDatesForVideos(catalog)
+    return video
