@@ -66,7 +66,11 @@ def loadCategoryID(catalog):
     categoryfile = cf.data_dir + 'videos/category-id.csv'
     input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter="\t")
     for category in input_file:
-        model.addCategoryID(catalog, category)
+        filtered_category = {
+            'id': category['id'],
+            'name': category['name']
+        }
+        model.addCategoryID(catalog, filtered_category)
 
 
 
