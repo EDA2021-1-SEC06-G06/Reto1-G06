@@ -134,8 +134,13 @@ def newCountry(countryName):
     return country
 
 
-
 # Funciones de consulta
+
+
+def primerVideo(catalog):
+
+    video1 = lt.getElement(catalog["videos"], 1)
+    return video1
 
 
 

@@ -84,6 +84,21 @@ def printCategoryData(category):
         print("No se encontró")
 
 
+def printPrimerVideo(video):
+    if video:
+        return("Fecha de tendencia: {0}   Título: {1}   Canal: {2}   Fecha de publicación: {3}   Visitas: {4}   Likes: {5}   Dislikes: {6}".format(video['trending_date'], video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes']))
+    else:
+        return("No se encontró el primero video")
+
+
+def printCategoryID(catalog):
+    if catalog:
+        print("El ID y el nombre de las categorias el lo siguiente:")
+        for category in lt.iterator(catalog["category_id"]):
+
+            print("{0} --- {1}".format(category['category_id'], category['name']))
+
+
 def initCatalog():
     """
     Inicializa el catálogo de videos.
@@ -132,6 +147,9 @@ while True:
         
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
 
+        print("El primero video es:\n{0}".format(printPrimerVideo(controller.primerVideo(catalog))))
+
+        printCategoryID(catalog)
 
 
     elif int(inputs[0]) == 2:

@@ -114,9 +114,12 @@ def sortVideos(catalog, size: int):
     return model.sortVideos(catalog, size)
 
 
-
 # Funciones de consulta sobre el catálogo
 
+
+def primerVideo(catalog):
+    video1 = model.primerVideo(catalog)
+    return video1
 
 
 def getVideosByCountry(catalog, countryName):
