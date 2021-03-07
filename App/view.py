@@ -27,6 +27,7 @@ from DISClib.ADT import list as lt
 assert cf
 
 
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -133,7 +134,6 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     
 
-
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         
@@ -150,6 +150,7 @@ while True:
         print("El primero video es:\n{0}".format(printPrimerVideo(controller.primerVideo(catalog))))
 
         printCategoryID(catalog)
+
 
 
     elif int(inputs[0]) == 2:
@@ -186,18 +187,19 @@ while True:
         printResults(result[1], sample=cantidad_videos)
 
 
+
     elif int(inputs[0]) == 4:
 
-        categoryName = 'Music'  # input
+        categoryName = input("Ingrese el nombre de la categoría que le interesa:\n~ ")
 
-        categoryCatalog = controller.getVideosByCategory(catalog, categoryName, catalog)
+        categoryCatalog = controller.getVideosByCategory(catalog, categoryName, catalog)  # Catálogo filtrado por la categoría
 
-        print(lt.size(categoryCatalog['videos']))
+        ordenados = controller.sortByTitle(categoryCatalog)  # Vídeos ordenados según su título
 
-        video = controller.countTrendingDatesForVideos(categoryCatalog)
-        print(video)
+        video = controller.masDiasTrending(ordenados)
 
-
+        print("El vídeo con más días de tendencia en la categoría {0} fue:\nTítulo: {1} -- Canal: {2} -- ID de la Categoría: {3} -- Días: {4}".format(categoryName, video['title'], video['channel_title'], video['category_id'], video['dias_t']))
+    
 
     else:
         sys.exit(0)

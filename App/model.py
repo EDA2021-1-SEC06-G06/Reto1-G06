@@ -30,6 +30,7 @@ from DISClib.ADT import list as lt
 import time
 from DISClib.Algorithms.Sorting import mergesort
 assert cf
+import datetime  # Se importa para que al imprimir información de los vídeos aparezca como una fecha legible.
 
 
 """
@@ -39,6 +40,7 @@ categorias de los mismos.
 
 
 # Construccion de modelos
+
 
 
 def newCatalog():
@@ -134,13 +136,16 @@ def newCountry(countryName):
     return country
 
 
+
 # Funciones de consulta
+
 
 
 def primerVideo(catalog):
 
     video1 = lt.getElement(catalog["videos"], 1)
     return video1
+
 
 
 
@@ -179,35 +184,49 @@ def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
 
 
 
-def countTrendingDatesForVideos(catalog):
+
+def masDiasTrending(ord_videos):
     """
     Args:
-        catalog: Catálogo filtrado
+        catalog: Catálogo ordenado según los Títulos
 
     Return:
         video_mayor_dias: Video que ha tenido más días de tendencia.
     """
-    video_ids_unicos = {'videos': {}}
+    size = lt.size(ord_videos)
 
-    max_dias = 0
-    mas_video = None
+    video_con_mas_dias = None
+    mas_dias = 1
 
-    for video in lt.iterator(catalog['videos']):  # TODO: Ver si nos dejan
+    i = 1  # Índice 1
+    ii = 2  # Índice 2
 
-        if video['title'] not in video_ids_unicos['videos'].keys():
+    while i <= size and ii <= size:
+        
+        video = lt.getElement(ord_videos, i)
 
-            video_ids_unicos['videos'][video['title']] = video
-    
-        else:
-            video_ids_unicos['videos'][video['title']]['dias_t'] += 1
+        if video['title'] == lt.getElement(ord_videos, ii)['title']:  # Si video tiene el mismo título que el siguiente vídeo.
+        
+            while ii <= size and (video['title'] == lt.getElement(ord_videos, ii)['title']):  # Mientras el siguiente vídeo tenga el mismo título.
+                video['dias_t'] += 1
+                ii += 1  # El índice 2 va aumentando.
 
-            if video_ids_unicos['videos'][video['title']]['dias_t'] > max_dias:
+            # Cuando termine el ciclo
+            i = ii + 1
+            ii += 2
 
-                max_dias = video_ids_unicos['videos'][video['title']]['dias_t']
+        else:  # Si no tienen el mismo título
+            i += 1
+            ii += 1
 
-                mas_video = video_ids_unicos['videos'][video['title']]
+        # Compara los días trending con más días
+        if video['dias_t'] > mas_dias:
+            mas_dias = video['dias_t']
+            video_con_mas_dias = video
 
-    return mas_video
+    return video_con_mas_dias
+
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -252,13 +271,21 @@ def cmpByCountry(countryName1, countryname):
 
 
 
+
 def cmpCategoriasByName(name, category):
     return (name == category['name'])
 
 
 
-def cmpVideosByTitle(title, video):
-    return (title == video['title'])
+
+def cmpVideosByTitle(video1, video2):
+    return (video1['title'] >= video2['title'])
+
+
+
+
+def cmpDiasTrending(video1, video2):
+    return (video1['dias_t'] > video2['dias_t'])
 
 
 
@@ -286,3 +313,14 @@ def sortVideos(catalog, size: int):
     else:
 
         return None, None
+
+
+def sortByTitle(catalog):
+    
+    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
+
+    sub_list = sub_list.copy()
+
+    sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByTitle)
+
+    return sorted_list
