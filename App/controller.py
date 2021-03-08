@@ -91,6 +91,7 @@ def loadVideos(catalog):
             'channel_title': video['channel_title'],
             'category_id': int(video['category_id']),
             'publish_time': dt.datetime.strptime(video['publish_time'], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            'tags': video['tags'],
             'views': int(video['views']),
             'likes': int(video['likes']),
             'dislikes': int(video['dislikes']),
@@ -177,10 +178,4 @@ def masDiasTrending(catalog):
         video_mayor_dias: Video que ha tenido más días de tendencia.
     """
     catalog = model.masDiasTrending(catalog)
-    return catalog
-
-
-def masLikes(catalog, cantidad):
-
-    catalog = model.masLikes(catalog, cantidad)
     return catalog
