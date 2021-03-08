@@ -209,37 +209,36 @@ def masDiasTrending(ord_videos):
     Return:
         video_mayor_dias: Video que ha tenido más días de tendencia.
     """
+    
     size = lt.size(ord_videos)
 
     video_con_mas_dias = None
     mas_dias = 1
 
-
     i = 1  # Índice 1
     ii = 2  # Índice 2
 
     while i <= size and ii <= size:
-        contador = 1
+        
         video = lt.getElement(ord_videos, i)
+        video['dias_t'] = 1
 
         if video['title'] == lt.getElement(ord_videos, ii)['title']:  # Si video tiene el mismo título que el siguiente vídeo.
-
+        
             while ii <= size and (video['title'] == lt.getElement(ord_videos, ii)['title']):  # Mientras el siguiente vídeo tenga el mismo título.
-                contador += 1
+                video['dias_t'] += 1
                 ii += 1  # El índice 2 va aumentando.
 
             # Cuando termine el ciclo
             i = ii + 1
             ii += 2
 
-        else:
-            i = ii + 1
-            ii += 2
-
+        else:  # Si no tienen el mismo título
+            i += 1
+            ii += 1
 
         # Compara los días trending con más días
-        if contador > mas_dias:
-            video['dias_t'] = contador
+        if video['dias_t'] > mas_dias:
             mas_dias = video['dias_t']
             video_con_mas_dias = video
 
