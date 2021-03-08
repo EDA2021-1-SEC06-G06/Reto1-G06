@@ -125,6 +125,15 @@ def sortByTitle(catalog):
 
 
 
+
+def sortByLikes(catalog):
+    """
+    Ordena los vídeos según el número de likes.
+    """
+    return model.sortByLikes(catalog)
+
+
+
 # Funciones de consulta sobre el catálogo
 
 
@@ -168,4 +177,10 @@ def masDiasTrending(catalog):
         video_mayor_dias: Video que ha tenido más días de tendencia.
     """
     catalog = model.masDiasTrending(catalog)
+    return catalog
+
+
+def masLikes(catalog, cantidad):
+
+    catalog = model.masLikes(catalog, cantidad)
     return catalog

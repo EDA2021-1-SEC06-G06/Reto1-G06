@@ -228,6 +228,7 @@ def masDiasTrending(ord_videos):
 
 
 
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 
@@ -289,6 +290,11 @@ def cmpDiasTrending(video1, video2):
 
 
 
+
+def cmpVideosByLikes(video1, video2):
+    return (video1['likes'] > video2['likes'])
+
+
 # Funciones de ordenamiento
 
 
@@ -316,11 +322,22 @@ def sortVideos(catalog, size: int):
 
 
 def sortByTitle(catalog):
-    
+  
     sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
 
     sub_list = sub_list.copy()
 
     sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByTitle)
+
+    return sorted_list
+
+
+def sortByLikes(catalog):
+
+    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
+
+    sub_list = sub_list.copy()
+
+    sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByLikes)
 
     return sorted_list

@@ -188,6 +188,22 @@ while True:
 
 
 
+    elif int(inputs[0]) == 3:
+
+        countryName = input("Ingrese el nombre del país que le interesa:\n~ ")
+
+        countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
+
+        ordenados = controller.sortByTitle(countryCatalog)  # Vídeos ordenados según su título
+
+        print(ordenados)
+
+        video = controller.masDiasTrending(ordenados)  # No funciona
+
+        print("El vídeo con más días de tendencia en el país {0} fue:\nTítulo: {1} -- Canal: {2}  -- Días: {3}".format(countryName, video['title'], video['channel_title'], video['dias_t']))
+
+
+
     elif int(inputs[0]) == 4:
 
         categoryName = input("Ingrese el nombre de la categoría que le interesa:\n~ ")
@@ -199,7 +215,19 @@ while True:
         video = controller.masDiasTrending(ordenados)
 
         print("El vídeo con más días de tendencia en la categoría {0} fue:\nTítulo: {1} -- Canal: {2} -- ID de la Categoría: {3} -- Días: {4}".format(categoryName, video['title'], video['channel_title'], video['category_id'], video['dias_t']))
-    
+
+
+
+    elif int(inputs[0]) == 5:
+
+        cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
+
+        tag = input("Ingrese el tag que desea consultar:\n~ ")
+
+        likesCatalog = controller.sortByLikes(catalog)
+
+        printResults(likesCatalog, cantidad_videos)
+
 
     else:
         sys.exit(0)
