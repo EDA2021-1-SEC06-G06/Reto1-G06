@@ -33,15 +33,19 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de vídeos
 
-def initCatalog(tipoDeLista: int):
+
+
+def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog(tipoDeLista)
+    catalog = model.newCatalog()
     return catalog
 
 
+
 # Funciones para la carga de datos
+
 
 
 def loadData(catalog):
@@ -53,6 +57,8 @@ def loadData(catalog):
     loadVideos(catalog)
 
 
+
+
 def loadCategoryID(catalog):
     """
     Carga las categorías del archivo.
@@ -60,14 +66,21 @@ def loadCategoryID(catalog):
     categoryfile = cf.data_dir + 'videos/category-id.csv'
     input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), delimiter="\t")
     for category in input_file:
-        model.addCategoryID(catalog, category)
+        filtered_category = {
+            'id': category['id'],
+            'name': (category['name']).replace(" ", '')  # quitar los espacios
+        }
+
+        model.addCategoryID(catalog, filtered_category)
+
+
 
 
 def loadVideos(catalog):
     """
     Carga todos los vídeos del archivo y los agrega a la lista de vídeos
     """
-    videosfile = cf.data_dir + 'videos/videos-large.csv'  # videos-large para la entrega
+    videosfile = cf.data_dir + 'videos/videos-5pct.csv'  # videos-large para la entrega
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         
@@ -81,17 +94,93 @@ def loadVideos(catalog):
             'views': int(video['views']),
             'likes': int(video['likes']),
             'dislikes': int(video['dislikes']),
-            'country': video['country']
-        }  
-        
+            'country': video['country'],
+            'dias_t': 1
+        }
+
+       
         model.addVideo(catalog, filtered_video)
+        model.addVideoCountry(catalog, filtered_video['country'], filtered_video)
+
+
 
 # Funciones de ordenamiento
 
 
-def sortVideos(catalog, size: int, algoritmoOrder: int):
+
+def sortVideos(catalog, size: int):
     """
-    Ordena los vídeos.
+    Ordena los vídeos según sus views.
     """
-    
-    return model.sortVideos(catalog, size, algoritmoOrder)
+    return model.sortVideos(catalog, size)
+
+
+
+
+def sortByTitle(catalog):
+    """
+    Ordena los vídeos según sus títulos.
+    """
+    return model.sortByTitle(catalog)
+
+
+
+
+def sortByLikes(catalog):
+    """
+    Ordena los vídeos según el número de likes.
+    """
+    return model.sortByLikes(catalog)
+
+
+
+# Funciones de consulta sobre el catálogo
+
+
+
+def primerVideo(catalog):
+    video1 = model.primerVideo(catalog)
+    return video1
+
+
+
+
+def getVideosByCountry(catalog, countryName):
+    country = model.getVideosByCountry(catalog, countryName)
+    return country
+
+
+
+
+def getVideosByCategory(catalog, categoryName, categoryCatalog):
+    """
+    Args:
+        catalog: Catálogo del país
+        categoryName: Nombre del país
+        categoryCatalog: Catálogo principal que contiene los category_id
+    """  
+    category = model.getVideosByCategory(catalog, categoryName, categoryCatalog)
+    return category
+
+
+
+# Funciones de operaciones sobre el catálogo
+
+
+
+def masDiasTrending(catalog):
+    """
+    Args:
+        catalog: Catálogo ordenado según los Títulos
+
+    Return:
+        video_mayor_dias: Video que ha tenido más días de tendencia.
+    """
+    catalog = model.masDiasTrending(catalog)
+    return catalog
+
+
+def masLikes(catalog, cantidad):
+
+    catalog = model.masLikes(catalog, cantidad)
+    return catalog
