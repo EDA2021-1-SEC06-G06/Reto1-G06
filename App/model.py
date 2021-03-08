@@ -160,6 +160,24 @@ def getVideosByCountry(catalog, countryName: str):
 
 
 
+def getVideosByTag(catalog, tag):
+
+    catalogo_filtrado = {'tag': tag, 'videos': None}
+    catalogo_filtrado['videos'] = lt.newList('ARRAY_LIST', cmpfunction=cmpVideosByLikes)
+
+    for video in lt.iterator(catalog['videos']):
+
+        if video['videos'] not in catalogo_filtrado['videos']:
+
+            if tag in video['tags']:
+
+                lt.addLast(catalogo_filtrado['videos'], video)
+
+    return catalogo_filtrado
+
+
+
+
 def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
     """
     Args:

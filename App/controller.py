@@ -80,7 +80,7 @@ def loadVideos(catalog):
     """
     Carga todos los vídeos del archivo y los agrega a la lista de vídeos
     """
-    videosfile = cf.data_dir + 'videos/videos-5pct.csv'  # videos-large para la entrega
+    videosfile = cf.data_dir + 'videos/videos-large.csv'  # videos-large para la entrega
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         
@@ -164,6 +164,11 @@ def getVideosByCategory(catalog, categoryName, categoryCatalog):
     return category
 
 
+
+def getVideosByTag(catalog, tag):
+
+    tag = model.getVideosByTag(catalog, tag)
+    return tag
 
 # Funciones de operaciones sobre el catálogo
 

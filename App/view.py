@@ -224,7 +224,9 @@ while True:
 
         tag = input("Ingrese el tag que desea consultar:\n~ ")
 
-        likesCatalog = controller.sortByLikes(catalog)
+        tagsCatalog = controller.getVideosByTag(catalog, tag)
+
+        likesCatalog = controller.sortByLikes(tagsCatalog)
 
         printResults(likesCatalog, cantidad_videos)
 
