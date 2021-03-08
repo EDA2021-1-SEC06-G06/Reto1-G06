@@ -61,11 +61,34 @@ def printResults(ord_videos, sample=10):
 
             video = lt.getElement(ord_videos, i)
 
+            if (i + 1) <= size and video['title'] == lt.getElement(ord_videos, i + 1)['title']:
+                i += 1
+                sample += 1
+
             print("Fecha de tendencia: {0}   Título: {1}   Canal: {2}   Fecha de publicación: {3}   Visitas: {4}   Likes: {5}   Dislikes: {6}".format(video['trending_date'], video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes']))
 
             i += 1
 
 
+def printReqCuatro(ord_videos, sample=10):
+    size = lt.size(ord_videos)
+
+    if size > sample:
+        print("Los primeros {0} vídeos ordenados son:".format(sample))
+
+        i = 1
+
+        while i <= sample:
+
+            video = lt.getElement(ord_videos, i)
+            """
+            if (i + 1) <= size and video['title'] == lt.getElement(ord_videos, i + 1)['title']:
+                i += 1
+                sample += 1
+            """
+            print("Título: {0}  Canal: {1}  Fecha de Publicación: {2}  Views: {3}  Likes: {4}  Dislikes: {5}  Tags: {6}".format(video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes'], video['tags']))
+            
+            i += 1
 
 
 def printCountryData(country):
@@ -219,16 +242,21 @@ while True:
 
 
     elif int(inputs[0]) == 5:
+        countryName = input("Ingrese el nombre del país que le interesa:\n~ ")
+        countryCatalog = controller.getVideosByCountry(catalog, countryName)
 
-        cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
+        printCountryData(countryCatalog)
 
         tag = input("Ingrese el tag que desea consultar:\n~ ")
+        size = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
 
-        tagsCatalog = controller.getVideosByTag(catalog, tag)
+        tagsCatalog = controller.getVideosByTag(countryCatalog, tag)
 
         likesCatalog = controller.sortByLikes(tagsCatalog)
 
-        printResults(likesCatalog, cantidad_videos)
+        filtrados = controller.quitarCopiasLikes(likesCatalog)  # TODO: Si no toca filtrarlo por titulo borrar esto.
+
+        printResults(filtrados, size)
 
 
     else:

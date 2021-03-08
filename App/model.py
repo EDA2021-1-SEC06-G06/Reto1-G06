@@ -167,11 +167,9 @@ def getVideosByTag(catalog, tag):
 
     for video in lt.iterator(catalog['videos']):
 
-        if video['videos'] not in catalogo_filtrado['videos']:
+        if tag in video['tags']:
 
-            if tag in video['tags']:
-
-                lt.addLast(catalogo_filtrado['videos'], video)
+            lt.addLast(catalogo_filtrado['videos'], video)
 
     return catalogo_filtrado
 
@@ -244,6 +242,28 @@ def masDiasTrending(ord_videos):
 
     return video_con_mas_dias
 
+
+
+def quitarCopiasLikes(ord_videos):  # TODO: Ver si sí toca filtrarlo
+
+    i = 1
+    
+    sub_list = lt.subList(ord_videos, 1, lt.size(ord_videos))
+    sub_list = sub_list.copy()
+    
+    for video in lt.iterator(ord_videos):
+        ii = i + 1
+        
+        while ii <= lt.size(sub_list):
+            if (ii < lt.size(sub_list)) and video['title'].replace(' ', '') == lt.getElement(sub_list, ii)['title'].replace(' ', ''):
+                lt.deleteElement(sub_list, ii)
+            
+            ii += 1
+        i += 1
+
+    return sub_list
+
+        
 
 
 

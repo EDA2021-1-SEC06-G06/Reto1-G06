@@ -184,3 +184,8 @@ def masDiasTrending(catalog):
     """
     catalog = model.masDiasTrending(catalog)
     return catalog
+
+
+
+def quitarCopiasLikes(ord_videos):
+    return model.quitarCopiasLikes(ord_videos)
