@@ -209,7 +209,7 @@ def masDiasTrending(ord_videos):
     Return:
         video_mayor_dias: Video que ha tenido más días de tendencia.
     """
-    
+
     size = lt.size(ord_videos)
 
     video_con_mas_dias = None
@@ -219,12 +219,12 @@ def masDiasTrending(ord_videos):
     ii = 2  # Índice 2
 
     while i <= size and ii <= size:
-        
+
         video = lt.getElement(ord_videos, i)
         video['dias_t'] = 1
 
         if video['title'] == lt.getElement(ord_videos, ii)['title']:  # Si video tiene el mismo título que el siguiente vídeo.
-        
+
             while ii <= size and (video['title'] == lt.getElement(ord_videos, ii)['title']):  # Mientras el siguiente vídeo tenga el mismo título.
                 video['dias_t'] += 1
                 ii += 1  # El índice 2 va aumentando.
@@ -236,6 +236,50 @@ def masDiasTrending(ord_videos):
         else:  # Si no tienen el mismo título
             i += 1
             ii += 1
+
+        # Compara los días trending con más días
+        if video['dias_t'] > mas_dias:
+            mas_dias = video['dias_t']
+            video_con_mas_dias = video
+
+    return video_con_mas_dias
+
+
+
+
+def masDiasTrendingID(ord_videos):
+    """
+    Args:
+        catalog: Catálogo ordenado según los Títulos
+
+    Return:
+        video_mayor_dias: Video que ha tenido más días de tendencia.
+    """
+
+    size = lt.size(ord_videos)
+
+    video_con_mas_dias = None
+    mas_dias = 1
+
+    i = 1  # Índice 1
+    ii = 2  # Índice 2
+
+    while i <= size and ii <= size:
+
+        video = lt.getElement(ord_videos, i)
+        video['dias_t'] = 1
+
+        if video['video_id'] == lt.getElement(ord_videos, ii)['video_id']:  # Si video tiene el mismo título que el siguiente vídeo.
+
+            while ii <= size and (video['video_id'] == lt.getElement(ord_videos, ii)['video_id']):  # Mientras el siguiente vídeo tenga el mismo título.
+                video['dias_t'] += 1
+                ii += 1  # El índice 2 va aumentando.
+
+        # Cuando termine el ciclo
+        i = ii + 1
+        ii += 2
+
+
 
         # Compara los días trending con más días
         if video['dias_t'] > mas_dias:

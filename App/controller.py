@@ -195,5 +195,18 @@ def masDiasTrending(catalog):
 
 
 
+def masDiasTrendingID(catalog):
+    """
+    Args:
+        catalog: Catálogo ordenado según los Títulos
+
+    Return:
+        video_mayor_dias: Video que ha tenido más días de tendencia.
+    """
+    catalog = model.masDiasTrendingID(catalog)
+    return catalog
+
+
+
 def quitarCopiasLikes(ord_videos):
     return model.quitarCopiasLikes(ord_videos)

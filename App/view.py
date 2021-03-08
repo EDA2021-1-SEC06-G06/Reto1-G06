@@ -219,7 +219,7 @@ while True:
 
         ordenados = controller.sortByID(countryCatalog)  # Vídeos ordenados según su título
 
-        video = controller.masDiasTrending(ordenados)  # No funciona
+        video = controller.masDiasTrendingID(ordenados)  # No funciona
 
         print("El vídeo con más días de tendencia en el país {0} fue:\nTítulo: {1} -- Canal: {2}  -- Días: {3}".format(countryName, video['title'], video['channel_title'], video['dias_t']))
 
