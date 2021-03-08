@@ -87,7 +87,7 @@ def printReqCuatro(ord_videos, sample=10):
                 sample += 1
             """
             print("Título: {0}  Canal: {1}  Fecha de Publicación: {2}  Views: {3}  Likes: {4}  Dislikes: {5}  Tags: {6}".format(video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes'], video['tags']))
-            
+
             i += 1
 
 
@@ -155,11 +155,11 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    
+
 
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        
+
         # Se inicializa el catálogo.
         catalog = initCatalog()
 
@@ -167,7 +167,7 @@ while True:
         loadData(catalog)
 
         print("Videos cargados: {0}".format(lt.size(catalog['videos'])))
-        
+
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
 
         print("El primero video es:\n{0}".format(printPrimerVideo(controller.primerVideo(catalog))))
@@ -181,30 +181,30 @@ while True:
         countryName = input("Ingrese el nombre del país que desea:\n~ ")
 
         countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
-      
+
 
 
         # Inputs secundarios del usuario
-        
-        
-        
+
+
+
         categoryName = input("Ingrese el nombre de la categoría que desea:\n~ ")
 
         categoryCatalog = controller.getVideosByCategory(countryCatalog, categoryName, catalog)  # Mirar parámetros
 
         printCategoryData(categoryCatalog)  # Se imprime la información filtrada por categoría y país
-    
+
 
 
         size = input("Indique el tamaño de la muestra:\n No puede ser mayor que el Total de videos de arriba\n~ ")
-        
+
         cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
-        
+
 
 
         result = controller.sortVideos(categoryCatalog, int(size))  # Ordenamiento por views
-   
-    
+
+
         print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
 
         printResults(result[1], sample=cantidad_videos)
@@ -217,9 +217,7 @@ while True:
 
         countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
 
-        ordenados = controller.sortByTitle(countryCatalog)  # Vídeos ordenados según su título
-
-        print(ordenados)
+        ordenados = controller.sortByID(countryCatalog)  # Vídeos ordenados según su título
 
         video = controller.masDiasTrending(ordenados)  # No funciona
 

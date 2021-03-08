@@ -83,7 +83,7 @@ def loadVideos(catalog):
     videosfile = cf.data_dir + 'videos/videos-large.csv'  # videos-large para la entrega
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
-        
+
         filtered_video = {
             'video_id': video['video_id'],
             'trending_date': dt.datetime.strptime(video['trending_date'], '%y.%d.%m').date(),
@@ -99,7 +99,7 @@ def loadVideos(catalog):
             'dias_t': 1
         }
 
-       
+
         model.addVideo(catalog, filtered_video)
         model.addVideoCountry(catalog, filtered_video['country'], filtered_video)
 
@@ -135,6 +135,14 @@ def sortByLikes(catalog):
 
 
 
+
+def sortByID(catalog):
+    """
+    Ordena los vídeos según el ID del video.
+    """
+    return model.sortByID(catalog)
+
+
 # Funciones de consulta sobre el catálogo
 
 
@@ -159,7 +167,7 @@ def getVideosByCategory(catalog, categoryName, categoryCatalog):
         catalog: Catálogo del país
         categoryName: Nombre del país
         categoryCatalog: Catálogo principal que contiene los category_id
-    """  
+    """
     category = model.getVideosByCategory(catalog, categoryName, categoryCatalog)
     return category
 

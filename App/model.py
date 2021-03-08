@@ -34,7 +34,7 @@ import datetime  # Se importa para que al imprimir información de los vídeos a
 
 
 """
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las 
+Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las
 categorias de los mismos.
 """
 
@@ -57,7 +57,7 @@ def newCatalog():
     catalog['videos'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpVideosByViews)
 
     # Se puede cambiar el cmpfunction
-    catalog['category_id'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpCategoriasByName)  
+    catalog['category_id'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpCategoriasByName)
 
     catalog['country'] = lt.newList(datastructure='ARRAY_LIST', cmpfunction=cmpByCountry)
 
@@ -191,7 +191,7 @@ def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
 
 
     for video in lt.iterator(catalog['videos']):  # Ciclo para iterar por cada video del catálogo
-   
+
         if video['category_id'] == id_:
 
             lt.addLast(catalogo_filtrado['videos'], video)  # se agrega al catálogo filtrado
@@ -214,29 +214,32 @@ def masDiasTrending(ord_videos):
     video_con_mas_dias = None
     mas_dias = 1
 
+
     i = 1  # Índice 1
     ii = 2  # Índice 2
 
     while i <= size and ii <= size:
-        
+        contador = 1
         video = lt.getElement(ord_videos, i)
 
         if video['title'] == lt.getElement(ord_videos, ii)['title']:  # Si video tiene el mismo título que el siguiente vídeo.
-        
+
             while ii <= size and (video['title'] == lt.getElement(ord_videos, ii)['title']):  # Mientras el siguiente vídeo tenga el mismo título.
-                video['dias_t'] += 1
+                contador += 1
                 ii += 1  # El índice 2 va aumentando.
 
             # Cuando termine el ciclo
             i = ii + 1
             ii += 2
 
-        else:  # Si no tienen el mismo título
-            i += 1
-            ii += 1
+        else:
+            i = ii + 1
+            ii += 2
+
 
         # Compara los días trending con más días
-        if video['dias_t'] > mas_dias:
+        if contador > mas_dias:
+            video['dias_t'] = contador
             mas_dias = video['dias_t']
             video_con_mas_dias = video
 
@@ -244,26 +247,26 @@ def masDiasTrending(ord_videos):
 
 
 
+
 def quitarCopiasLikes(ord_videos):  # TODO: Ver si sí toca filtrarlo
 
     i = 1
-    
+
     sub_list = lt.subList(ord_videos, 1, lt.size(ord_videos))
     sub_list = sub_list.copy()
-    
+
     for video in lt.iterator(ord_videos):
         ii = i + 1
-        
+
         while ii <= lt.size(sub_list):
             if (ii < lt.size(sub_list)) and video['title'].replace(' ', '') == lt.getElement(sub_list, ii)['title'].replace(' ', ''):
                 lt.deleteElement(sub_list, ii)
-            
+
             ii += 1
         i += 1
 
     return sub_list
 
-        
 
 
 
@@ -333,6 +336,12 @@ def cmpVideosByLikes(video1, video2):
     return (video1['likes'] > video2['likes'])
 
 
+
+
+def cmpVideosByID(video1, video2):
+    return (video1['video_id'] >= video2['video_id'])
+
+
 # Funciones de ordenamiento
 
 
@@ -360,7 +369,7 @@ def sortVideos(catalog, size: int):
 
 
 def sortByTitle(catalog):
-  
+
     sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
 
     sub_list = sub_list.copy()
@@ -368,6 +377,19 @@ def sortByTitle(catalog):
     sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByTitle)
 
     return sorted_list
+
+
+
+def sortByID(catalog):
+
+    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
+
+    sub_list = sub_list.copy()
+
+    sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByID)
+
+    return sorted_list
+
 
 
 def sortByLikes(catalog):
