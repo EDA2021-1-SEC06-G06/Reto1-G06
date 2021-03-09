@@ -53,7 +53,7 @@ def printResults(ord_videos, sample=10):
     size = lt.size(ord_videos)
 
     if size > sample:
-        print("Los primeros {0} vídeos ordenados son:".format(sample))
+        print("Los primeros {0} vídeos ordenados son:\n".format(sample))
 
         i = 1
 
@@ -61,51 +61,54 @@ def printResults(ord_videos, sample=10):
 
             video = lt.getElement(ord_videos, i)
 
-            if (i + 1) <= size and video['title'] == lt.getElement(ord_videos, i + 1)['title']:
-                i += 1
-                sample += 1
-
-            print("Fecha de tendencia: {0}   Título: {1}   Canal: {2}   Fecha de publicación: {3}   Visitas: {4}   Likes: {5}   Dislikes: {6}".format(video['trending_date'], video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes']))
+            print("Fecha de tendencia: {0}   Título: {1}   Canal: {2}   Fecha de publicación: {3}   Visitas: {4}   Likes: {5}   Dislikes: {6}\n".format(video['trending_date'], video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes']))
 
             i += 1
+
+
 
 
 def printReqCuatro(ord_videos, sample=10):
     size = lt.size(ord_videos)
 
     if size > sample:
-        print("Los primeros {0} vídeos ordenados son:".format(sample))
+        print("Los primeros {0} vídeos ordenados son:\n".format(sample))
 
         i = 1
 
         while i <= sample:
 
             video = lt.getElement(ord_videos, i)
-            """
-            if (i + 1) <= size and video['title'] == lt.getElement(ord_videos, i + 1)['title']:
+
+            if (i + 1) <= size and video['title'] == lt.getElement(ord_videos, i + 1)['title']:  # Para que no se imprima el mismo vídeo consecuntivamente
                 i += 1
                 sample += 1
-            """
-            print("Título: {0}  Canal: {1}  Fecha de Publicación: {2}  Views: {3}  Likes: {4}  Dislikes: {5}  Tags: {6}".format(video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes'], video['tags']))
+
+            print("Título: {0}   Canal: {1}   Fecha de publicación: {2}   Visitas: {3}   Likes: {4}   Dislikes: {5}   Tags: {6}\n".format(video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes'], video['tags']))
 
             i += 1
 
 
+
+
 def printCountryData(country):
     if country:
-        print("Nombre: {0}".format(country['name']))
-        print('Total videos: {0}'.format(lt.size(country['videos'])))
+        print("Nombre del país: {0}\n".format(country['name']))
+        print('Cantidad de vídeos en este país: {0}\n'.format(lt.size(country['videos'])))
     else:
         print("No se encontró el país")
 
 
 
+
 def printCategoryData(category):
     if category:
-        print('Nombre: {0}'.format(category['name']))
-        print("Cantidad de vídeos en la categoría: {0}".format(lt.size(category['videos'])))
+        print('Nombre de la categoría: {0}\n'.format(category['name']))
+        print("Cantidad de vídeos en la categoría: {0}\n".format(lt.size(category['videos'])))
     else:
         print("No se encontró")
+
+
 
 
 def printPrimerVideo(video):
@@ -115,12 +118,16 @@ def printPrimerVideo(video):
         return("No se encontró el primero video")
 
 
+
+
 def printCategoryID(catalog):
     if catalog:
-        print("El ID y el nombre de las categorias el lo siguiente:")
+        print("El ID y el nombre de las categorias el lo siguiente:\n")
         for category in lt.iterator(catalog["category_id"]):
 
             print("{0} --- {1}".format(category['category_id'], category['name']))
+
+
 
 
 def initCatalog():
@@ -152,6 +159,7 @@ Menu principal
 """
 
 
+
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
@@ -170,7 +178,7 @@ while True:
 
         print("Categorías cargadas: {0}".format(lt.size(catalog['category_id'])))
 
-        print("El primero video es:\n{0}".format(printPrimerVideo(controller.primerVideo(catalog))))
+        print("El primero video es:\n{0}\n".format(printPrimerVideo(controller.primerVideo(catalog))))
 
         printCategoryID(catalog)
 
@@ -181,11 +189,9 @@ while True:
         countryName = input("Ingrese el nombre del país que desea:\n~ ")
 
         countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
-
-
+        printCountryData(countryCatalog)
 
         # Inputs secundarios del usuario
-
 
 
         categoryName = input("Ingrese el nombre de la categoría que desea:\n~ ")
@@ -195,19 +201,13 @@ while True:
         printCategoryData(categoryCatalog)  # Se imprime la información filtrada por categoría y país
 
 
-
-        size = input("Indique el tamaño de la muestra:\n No puede ser mayor que el Total de videos de arriba\n~ ")
-
         cantidad_videos = int(input("Ingrese la cantidad de vídeos que desea listar:\n~ "))
 
 
 
-        result = controller.sortVideos(categoryCatalog, int(size))  # Ordenamiento por views
+        result = controller.sortVideos(categoryCatalog)  # Ordenamiento por views
 
-
-        print("Para la muestra de {0} elementos, el tiempo (mseg) es: {1}".format(size, result[0]))
-
-        printResults(result[1], sample=cantidad_videos)
+        printResults(result, sample=cantidad_videos)
 
 
 
@@ -216,12 +216,13 @@ while True:
         countryName = input("Ingrese el nombre del país que le interesa:\n~ ")
 
         countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
+        printCountryData(countryCatalog)
 
         ordenados = controller.sortByID(countryCatalog)  # Vídeos ordenados según su título
 
         video = controller.masDiasTrendingID(ordenados)  # No funciona
 
-        print("El vídeo con más días de tendencia en el país {0} fue:\nTítulo: {1} -- Canal: {2}  -- Días: {3}".format(countryName, video['title'], video['channel_title'], video['dias_t']))
+        print("El vídeo con más días de tendencia en el país {0} fue:\nTítulo: {1} -- Canal: {2} -- País: {3} -- Días de Tendencia: {4}\n".format(countryName, video['title'], video['channel_title'], video['country'], video['dias_t']))
 
 
 
@@ -230,12 +231,13 @@ while True:
         categoryName = input("Ingrese el nombre de la categoría que le interesa:\n~ ")
 
         categoryCatalog = controller.getVideosByCategory(catalog, categoryName, catalog)  # Catálogo filtrado por la categoría
+        printCategoryData(categoryCatalog)
 
         ordenados = controller.sortByTitle(categoryCatalog)  # Vídeos ordenados según su título
 
         video = controller.masDiasTrending(ordenados)
 
-        print("El vídeo con más días de tendencia en la categoría {0} fue:\nTítulo: {1} -- Canal: {2} -- ID de la Categoría: {3} -- Días: {4}".format(categoryName, video['title'], video['channel_title'], video['category_id'], video['dias_t']))
+        print("El vídeo con más días de tendencia en la categoría {0} fue:\nTítulo: {1} -- Canal: {2} -- ID de la Categoría: {3} -- Días de Tendencia: {4}\n".format(categoryName, video['title'], video['channel_title'], video['category_id'], video['dias_t']))
 
 
 
@@ -252,9 +254,9 @@ while True:
 
         likesCatalog = controller.sortByLikes(tagsCatalog)
 
-        filtrados = controller.quitarCopiasLikes(likesCatalog)  # TODO: Si no toca filtrarlo por titulo borrar esto.
+        filtrados = controller.quitarCopiasLikes(likesCatalog) 
 
-        printResults(filtrados, size)
+        printReqCuatro(filtrados, size)
 
 
     else:

@@ -109,11 +109,11 @@ def loadVideos(catalog):
 
 
 
-def sortVideos(catalog, size: int):
+def sortVideos(catalog):
     """
     Ordena los vídeos según sus views.
     """
-    return model.sortVideos(catalog, size)
+    return model.sortVideos(catalog)
 
 
 
@@ -141,6 +141,7 @@ def sortByID(catalog):
     Ordena los vídeos según el ID del video.
     """
     return model.sortByID(catalog)
+
 
 
 # Funciones de consulta sobre el catálogo
@@ -173,10 +174,13 @@ def getVideosByCategory(catalog, categoryName, categoryCatalog):
 
 
 
+
 def getVideosByTag(catalog, tag):
 
     tag = model.getVideosByTag(catalog, tag)
     return tag
+
+
 
 # Funciones de operaciones sobre el catálogo
 
@@ -195,6 +199,7 @@ def masDiasTrending(catalog):
 
 
 
+
 def masDiasTrendingID(catalog):
     """
     Args:
@@ -205,6 +210,7 @@ def masDiasTrendingID(catalog):
     """
     catalog = model.masDiasTrendingID(catalog)
     return catalog
+
 
 
 

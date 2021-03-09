@@ -24,13 +24,12 @@
  * Dario Correal - Version inicial
  """
 
-
+import datetime  # Se importa para que al imprimir información de los vídeos aparezca como una fecha legible.
 import config as cf
 from DISClib.ADT import list as lt
-import time
 from DISClib.Algorithms.Sorting import mergesort
 assert cf
-import datetime  # Se importa para que al imprimir información de los vídeos aparezca como una fecha legible.
+
 
 
 """
@@ -229,16 +228,11 @@ def masDiasTrending(ord_videos):
                 video['dias_t'] += 1
                 ii += 1  # El índice 2 va aumentando.
 
-            # Cuando termine el ciclo
-            i = ii + 1
-            ii += 2
-
-        else:  # Si no tienen el mismo título
-            i += 1
-            ii += 1
+        i = ii
+        ii += 1
 
         # Compara los días trending con más días
-        if video['dias_t'] > mas_dias:
+        if video['dias_t'] >= mas_dias:
             mas_dias = video['dias_t']
             video_con_mas_dias = video
 
@@ -289,7 +283,7 @@ def masDiasTrendingID(ord_videos):
 
 
 
-def quitarCopiasLikes(ord_videos):  # TODO: Ver si sí toca filtrarlo
+def quitarCopiasLikes(ord_videos):
 
     i = 1
 
@@ -307,7 +301,6 @@ def quitarCopiasLikes(ord_videos):  # TODO: Ver si sí toca filtrarlo
         i += 1
 
     return sub_list
-
 
 
 
@@ -337,8 +330,9 @@ def cmpVideosByViews(video1, video2):
     Args:
         video1: informacion del primer video que incluye su valor 'views'
         video2: informacion del segundo video que incluye su valor 'views'
+    Return:
+        bool
     """
-
     return (float(video1['views']) > float(video2['views']))
 
 
@@ -383,30 +377,21 @@ def cmpVideosByID(video1, video2):
     return (video1['video_id'] >= video2['video_id'])
 
 
+
 # Funciones de ordenamiento
 
 
 
-def sortVideos(catalog, size: int):
+def sortVideos(catalog):
 
-    if size <= lt.size(catalog['videos']):
+    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
+    sub_list = sub_list.copy()
 
-        sub_list = lt.subList(catalog['videos'], 1, size)
-        sub_list = sub_list.copy()
+    sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
 
-        start_time = time.process_time()
+    return sorted_list
 
-        sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
 
-        stop_time = time.process_time()
-
-        elapsed_time_mseg = (stop_time - start_time) * 1000
-
-        return elapsed_time_mseg, sorted_list
-
-    else:
-
-        return None, None
 
 
 def sortByTitle(catalog):
@@ -421,6 +406,7 @@ def sortByTitle(catalog):
 
 
 
+
 def sortByID(catalog):
 
     sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
@@ -430,6 +416,7 @@ def sortByID(catalog):
     sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByID)
 
     return sorted_list
+
 
 
 
