@@ -276,13 +276,11 @@ def masDiasTrendingID(ord_videos):
                 ii += 1  # El índice 2 va aumentando.
 
         # Cuando termine el ciclo
-        i = ii + 1
-        ii += 2
-
-
+        i = ii
+        ii += 1
 
         # Compara los días trending con más días
-        if video['dias_t'] > mas_dias:
+        if video['dias_t'] >= mas_dias:
             mas_dias = video['dias_t']
             video_con_mas_dias = video
 
