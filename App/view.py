@@ -296,7 +296,7 @@ while True:
 
         likesCatalog = controller.sortVideos(tagsCatalog, 4)
 
-        filtrados = controller.quitarCopiasLikes(likesCatalog)
+        filtrados = controller.quitarCopiasLikes(likesCatalog, size)
 
         printReqCuatro(filtrados, size)
 

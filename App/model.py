@@ -292,7 +292,7 @@ def masDiasTrending(ord_videos, llave=2):
 
 
 
-def quitarCopiasLikes(ord_videos):
+def quitarCopiasLikes(ord_videos, size):
     """
     Args:
         ord_videos: catálogo de videos ordenados.
@@ -307,13 +307,18 @@ def quitarCopiasLikes(ord_videos):
     sub_list = sub_list.copy()
 
     for video in lt.iterator(ord_videos):
+
         ii = i + 1
 
         while ii <= lt.size(sub_list):
-            if (ii < lt.size(sub_list)) and video['title'].replace(' ', '') == lt.getElement(sub_list, ii)['title'].replace(' ', ''):
+            if (ii < lt.size(sub_list)) and video['title'] == lt.getElement(sub_list, ii)['title']:
                 lt.deleteElement(sub_list, ii)
 
             ii += 1
+            
+        if i == size + 1:
+            return sub_list
+
         i += 1
 
     return sub_list
