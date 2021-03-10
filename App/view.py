@@ -50,6 +50,11 @@ def printMenu():
 
 
 def printResults(ord_videos, sample=10):
+    """
+    Args:
+        ord_videos: Catálogo de videos ordenados.
+        sample: cantidad de videos para imprimir.
+    """
     size = lt.size(ord_videos)
 
     if size > sample:
@@ -69,6 +74,13 @@ def printResults(ord_videos, sample=10):
 
 
 def printReqCuatro(ord_videos, sample=10):
+    """
+    Args:
+        ord_videos: Catálogo de videos ordenados.
+        sample: cantidad de videos para imprimir.
+
+    Imrpime el requerimiento 4
+    """
     size = lt.size(ord_videos)
 
     if size > sample:
@@ -92,6 +104,13 @@ def printReqCuatro(ord_videos, sample=10):
 
 
 def printCountryData(country):
+    """
+    Args:
+        country: Nombre del país.
+
+    Imrpime el país y la cantidad de vídeos en ese país.
+    """
+
     if country:
         print("Nombre del país: {0}\n".format(country['name']))
         print('Cantidad de vídeos en este país: {0}\n'.format(lt.size(country['videos'])))
@@ -102,6 +121,12 @@ def printCountryData(country):
 
 
 def printCategoryData(category):
+    """
+    Args:
+        category: Nombre de la categría.
+
+    Imrpime la categoría y la cantidad de vídeos en esa categoría.
+    """
     if category:
         print('Nombre de la categoría: {0}\n'.format(category['name']))
         print("Cantidad de vídeos en la categoría: {0}\n".format(lt.size(category['videos'])))
@@ -112,6 +137,14 @@ def printCategoryData(category):
 
 
 def printPrimerVideo(video):
+    """
+    Args:
+        video: Nombre del primer video cargado en el catálogo.
+
+    Return:
+        video1: Retorna el primero video cargado en el catálogo.
+    """
+
     if video:
         return("Fecha de tendencia: {0}   Título: {1}   Canal: {2}   Fecha de publicación: {3}   Visitas: {4}   Likes: {5}   Dislikes: {6}".format(video['trending_date'], video['title'], video['channel_title'], video['publish_time'], video['views'], video['likes'], video['dislikes']))
     else:
@@ -121,6 +154,12 @@ def printPrimerVideo(video):
 
 
 def printCategoryID(catalog):
+    """
+    Args:
+        catalog: Catálogo de videos.
+
+    Imprime el nombre y el ID de la categoría.
+    """
     if catalog:
         print("El ID y el nombre de las categorias el lo siguiente:\n")
         for category in lt.iterator(catalog["category_id"]):
@@ -141,6 +180,9 @@ def initCatalog():
 
 def loadData(catalog):
     """
+    Args:
+        catalog: Catálogo de videos.
+
     Carga los videos en la estructura de datos.
     """
     controller.loadData(catalog)
@@ -254,7 +296,7 @@ while True:
 
         likesCatalog = controller.sortByLikes(tagsCatalog)
 
-        filtrados = controller.quitarCopiasLikes(likesCatalog) 
+        filtrados = controller.quitarCopiasLikes(likesCatalog)
 
         printReqCuatro(filtrados, size)
 

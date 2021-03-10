@@ -38,6 +38,8 @@ El controlador se encarga de mediar entre la vista y el modelo.
 def initCatalog():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
+
+    Retorna el catálogo.
     """
     catalog = model.newCatalog()
     return catalog
@@ -50,6 +52,9 @@ def initCatalog():
 
 def loadData(catalog):
     """
+    Args:
+        catalog: Catálogo de videos.
+
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
@@ -61,6 +66,9 @@ def loadData(catalog):
 
 def loadCategoryID(catalog):
     """
+    Args:
+        catalog: Catálogo de videos.
+
     Carga las categorías del archivo.
     """
     categoryfile = cf.data_dir + 'videos/category-id.csv'
@@ -78,6 +86,9 @@ def loadCategoryID(catalog):
 
 def loadVideos(catalog):
     """
+    Args:
+        catalog: Catálogo de videos.
+
     Carga todos los vídeos del archivo y los agrega a la lista de vídeos
     """
     videosfile = cf.data_dir + 'videos/videos-large.csv'  # videos-large para la entrega
@@ -111,7 +122,11 @@ def loadVideos(catalog):
 
 def sortVideos(catalog):
     """
-    Ordena los vídeos según sus views.
+    Args:
+        catalog: Catálogo de videos.
+
+    Return:
+        list: Ordena los vídeos según sus views.
     """
     return model.sortVideos(catalog)
 
@@ -120,7 +135,11 @@ def sortVideos(catalog):
 
 def sortByTitle(catalog):
     """
-    Ordena los vídeos según sus títulos.
+    Args:
+        catalog: Catálogo de videos.
+
+    Return:
+        list: Ordena los vídeos según el título del video.
     """
     return model.sortByTitle(catalog)
 
@@ -129,7 +148,11 @@ def sortByTitle(catalog):
 
 def sortByLikes(catalog):
     """
-    Ordena los vídeos según el número de likes.
+    Args:
+        catalog: Catálogo de videos.
+
+    Return:
+        list: Ordena los vídeos según el número de likes.
     """
     return model.sortByLikes(catalog)
 
@@ -138,7 +161,11 @@ def sortByLikes(catalog):
 
 def sortByID(catalog):
     """
-    Ordena los vídeos según el ID del video.
+    Args:
+        catalog: Catálogo de videos.
+
+    Return:
+        list: Ordena los vídeos según su ID.
     """
     return model.sortByID(catalog)
 
@@ -149,6 +176,13 @@ def sortByID(catalog):
 
 
 def primerVideo(catalog):
+    """
+    Args:
+        catalog: Catálogo de videos.
+
+    Return:
+        video1: Retorna el primero video cargado en el catálogo.
+    """
     video1 = model.primerVideo(catalog)
     return video1
 
@@ -156,6 +190,14 @@ def primerVideo(catalog):
 
 
 def getVideosByCountry(catalog, countryName):
+    """
+    Args:
+        catalog: Catálogo de videos.
+        countryName: Nombre del país para flitrar los videos.
+
+    Return:
+        list: catálogo filtrado por el nombre del país.
+    """
     country = model.getVideosByCountry(catalog, countryName)
     return country
 
@@ -165,9 +207,11 @@ def getVideosByCountry(catalog, countryName):
 def getVideosByCategory(catalog, categoryName, categoryCatalog):
     """
     Args:
-        catalog: Catálogo del país
-        categoryName: Nombre del país
-        categoryCatalog: Catálogo principal que contiene los category_id
+        catalog: Catálogo de videos.
+        categoryName: Nombre de la categoría para flitrar los videos.
+
+    Return:
+        list: catálogo filtrado por el nombre de la categoría.
     """
     category = model.getVideosByCategory(catalog, categoryName, categoryCatalog)
     return category
@@ -176,7 +220,14 @@ def getVideosByCategory(catalog, categoryName, categoryCatalog):
 
 
 def getVideosByTag(catalog, tag):
+    """
+    Args:
+        catalog: Catálogo de videos
+        tag: Nombre del tag ingresado por el usuario
 
+    Return:
+        tag: Catálogo filtrado de acuerdo con el tag ingresado por parámetro
+    """
     tag = model.getVideosByTag(catalog, tag)
     return tag
 
@@ -215,4 +266,11 @@ def masDiasTrendingID(catalog):
 
 
 def quitarCopiasLikes(ord_videos):
+    """
+    Args:
+        ord_videos: Catálogo de videos ordenado.
+
+    Return:
+        ord_videos: Catálogo de videos ordenado y filtrado para que no se repita un mismo video.
+    """
     return model.quitarCopiasLikes(ord_videos)

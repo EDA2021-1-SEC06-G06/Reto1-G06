@@ -44,10 +44,10 @@ categorias de los mismos.
 
 def newCatalog():
     """
-    Inicializa el catálogo de videos. Crea una lista vacía para guardar
+    Inicializa el catálogo de videos. Crea una lista vacía para guardar.
     todos los videos. Adicionalmente, crea una lista vacía para las categorías.
 
-    Retorna el catálogo inicializado
+    Retorna el catálogo inicializado.
     """
 
     catalog = {'videos': None, 'category_id': None, 'country': None}
@@ -70,6 +70,10 @@ def newCatalog():
 
 def addVideo(catalog, video):
     """
+    Args:
+        catalog: Catálogo de videos.
+        video: Video que desea agregarse en el catálogo.
+
     Adiciona un video a la lista de videos.
     """
 
@@ -81,6 +85,10 @@ def addVideo(catalog, video):
 
 def addCategoryID(catalog, category):
     """
+    Args:
+        catalog: Catálogo de videos.
+        category: Nombre de la categoría que desea agregarse en el catálogo.
+
     Adiciona una categoría a la lista de categorías.
     """
     # Se crea la nueva categoría
@@ -92,7 +100,14 @@ def addCategoryID(catalog, category):
 
 
 def addVideoCountry(catalog, countryName, video):
+    """
+    Args:
+        catalog: Catálogo de videos.
+        countryName: Nombre del país con el que se desea filtrar el catálogo.
+        video: video que desea agregarse en caso de que no exista.
 
+    Filtra el carálogo de vídeos por país.
+    """
     paises = catalog['country']  # paises es un dict que tiene como llaves los países
 
     poscountry = lt.isPresent(paises, countryName)  # posición del país en paises
@@ -113,6 +128,10 @@ def addVideoCountry(catalog, countryName, video):
 
 def newCategoryID(name, id_):
     """
+    Args:
+        name: Nombre de la categoría.
+        id: Número asignado a esa categoría que entra por parámetro.
+
     Esta estructura almacena las categorías utilizadas para marcar videos.
     """
 
@@ -128,7 +147,12 @@ def newCategoryID(name, id_):
 
 
 def newCountry(countryName):
+    """
+    Args:
+        countryName: Nombre del país.
 
+    Esta estructura almacena el país que entra por parámetro para marcar videos.
+    """
     country = {'name': '', 'videos': None}
     country['name'] = countryName
     country['videos'] = lt.newList('ARRAY_LIST', cmpfunction=cmpVideosByViews)
@@ -141,7 +165,12 @@ def newCountry(countryName):
 
 
 def primerVideo(catalog):
+    """
+    Args:
+        catalog: Catálogo de videos.
 
+    Retorna el primer video cargado.
+    """
     video1 = lt.getElement(catalog["videos"], 1)
     return video1
 
@@ -149,7 +178,13 @@ def primerVideo(catalog):
 
 
 def getVideosByCountry(catalog, countryName: str):
+    """
+    Args:
+        catalog: Catálogo de videos.
+        countryName: Nombre del país.
 
+    Filtra el catálogo de acuerdo a los parámetros indicados.
+    """
     posCountry = lt.isPresent(catalog['country'], countryName)  # recibo la posición del país en el catálogo
     if posCountry > 0:
         country = lt.getElement(catalog['country'], posCountry)  # recibe el array del país que contiene el name y videos
@@ -160,6 +195,13 @@ def getVideosByCountry(catalog, countryName: str):
 
 
 def getVideosByTag(catalog, tag):
+    """
+    Args:
+        catalog: Catálogo de videos.
+        tag: Nombre del tag.
+
+    Filtra el catálogo de acuerdo a los parámetros indicados.
+    """
 
     catalogo_filtrado = {'tag': tag, 'videos': None}
     catalogo_filtrado['videos'] = lt.newList('ARRAY_LIST', cmpfunction=cmpVideosByLikes)
@@ -181,6 +223,9 @@ def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
         catalog: Catálogo del país
         categoryName: Nombre del país
         categoryCatalog: Catálogo principal que contiene los category_id
+
+    Return:
+        list: Catálogo filtrado de acuerdo a los parámetros.
     """
 
     id_, name = categoryNameToID(categoryCatalog, categoryName)  # del catálogo principal, cambia categoryName por su id
@@ -206,7 +251,7 @@ def masDiasTrending(ord_videos):
         catalog: Catálogo ordenado según los Títulos
 
     Return:
-        video_mayor_dias: Video que ha tenido más días de tendencia.
+        video_con_mas_dias: Video que ha tenido más días de tendencia.
     """
 
     size = lt.size(ord_videos)
@@ -247,7 +292,7 @@ def masDiasTrendingID(ord_videos):
         catalog: Catálogo ordenado según los Títulos
 
     Return:
-        video_mayor_dias: Video que ha tenido más días de tendencia.
+        video_con_mas_dias: Video que ha tenido más días de tendencia.
     """
 
     size = lt.size(ord_videos)
@@ -284,6 +329,13 @@ def masDiasTrendingID(ord_videos):
 
 
 def quitarCopiasLikes(ord_videos):
+    """
+    Args:
+        ord_videos: catálogo de videos ordenados.
+
+    Return:
+        list: Lista donde solo se incluya cada video que aparezca más de unna vez, dejando así el que mas likes tenga.
+    """
 
     i = 1
 
@@ -309,6 +361,14 @@ def quitarCopiasLikes(ord_videos):
 
 
 def categoryNameToID(catalog, name: str):
+    """
+    Args:
+        catalog: Catálogo ordenado según los Títulos
+        name: Nombre de la categoría, para encotrar así su ID.
+
+    Return:
+        tupla: Con el nombre de la categoría y su respectivo ID.
+    """
 
     id_ = None
 
@@ -383,6 +443,13 @@ def cmpVideosByID(video1, video2):
 
 
 def sortVideos(catalog):
+    """
+    Args:
+        catalog: Catálogo ordenado según los Títulos
+
+    Return:
+        list: Lista ordenada de acuerdo a los parámetros.
+    """
 
     sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
     sub_list = sub_list.copy()
