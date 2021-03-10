@@ -247,7 +247,7 @@ while True:
 
 
 
-        result = controller.sortVideos(categoryCatalog)  # Ordenamiento por views
+        result = controller.sortVideos(categoryCatalog, 1)  # Ordenamiento por views
 
         printResults(result, sample=cantidad_videos)
 
@@ -260,9 +260,9 @@ while True:
         countryCatalog = controller.getVideosByCountry(catalog, countryName)  # Nuevo catálogo filtrado del país elegido
         printCountryData(countryCatalog)
 
-        ordenados = controller.sortByID(countryCatalog)  # Vídeos ordenados según su título
+        ordenados = controller.sortVideos(countryCatalog, 3)  # Vídeos ordenados según su ID
 
-        video = controller.masDiasTrendingID(ordenados)  # No funciona
+        video = controller.masDiasTrending(ordenados, 2)  # No funciona
 
         print("El vídeo con más días de tendencia en el país {0} fue:\nTítulo: {1} -- Canal: {2} -- País: {3} -- Días de Tendencia: {4}\n".format(countryName, video['title'], video['channel_title'], video['country'], video['dias_t']))
 
@@ -275,9 +275,9 @@ while True:
         categoryCatalog = controller.getVideosByCategory(catalog, categoryName, catalog)  # Catálogo filtrado por la categoría
         printCategoryData(categoryCatalog)
 
-        ordenados = controller.sortByTitle(categoryCatalog)  # Vídeos ordenados según su título
+        ordenados = controller.sortVideos(categoryCatalog, 2)  # Vídeos ordenados según su título
 
-        video = controller.masDiasTrending(ordenados)
+        video = controller.masDiasTrending(ordenados, 1)
 
         print("El vídeo con más días de tendencia en la categoría {0} fue:\nTítulo: {1} -- Canal: {2} -- ID de la Categoría: {3} -- Días de Tendencia: {4}\n".format(categoryName, video['title'], video['channel_title'], video['category_id'], video['dias_t']))
 
@@ -294,7 +294,7 @@ while True:
 
         tagsCatalog = controller.getVideosByTag(countryCatalog, tag)
 
-        likesCatalog = controller.sortByLikes(tagsCatalog)
+        likesCatalog = controller.sortVideos(tagsCatalog, 4)
 
         filtrados = controller.quitarCopiasLikes(likesCatalog)
 

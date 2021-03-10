@@ -245,14 +245,19 @@ def getVideosByCategory(catalog, categoryName: str, categoryCatalog):
 
 
 
-def masDiasTrending(ord_videos):
+def masDiasTrending(ord_videos, llave=2):
     """
     Args:
         catalog: Catálogo ordenado según los Títulos
+        llave: (1) 'title' o (2) 'video_id'
 
     Return:
         video_con_mas_dias: Video que ha tenido más días de tendencia.
     """
+    if llave == 1:
+        llave = 'title'
+    else:
+        llave = 'video_id'
 
     size = lt.size(ord_videos)
 
@@ -267,50 +272,9 @@ def masDiasTrending(ord_videos):
         video = lt.getElement(ord_videos, i)
         video['dias_t'] = 1
 
-        if video['title'] == lt.getElement(ord_videos, ii)['title']:  # Si video tiene el mismo título que el siguiente vídeo.
+        if video[llave] == lt.getElement(ord_videos, ii)[llave]:  # Si video tiene el mismo título que el siguiente vídeo.
 
-            while ii <= size and (video['title'] == lt.getElement(ord_videos, ii)['title']):  # Mientras el siguiente vídeo tenga el mismo título.
-                video['dias_t'] += 1
-                ii += 1  # El índice 2 va aumentando.
-
-        i = ii
-        ii += 1
-
-        # Compara los días trending con más días
-        if video['dias_t'] >= mas_dias:
-            mas_dias = video['dias_t']
-            video_con_mas_dias = video
-
-    return video_con_mas_dias
-
-
-
-
-def masDiasTrendingID(ord_videos):
-    """
-    Args:
-        catalog: Catálogo ordenado según los Títulos
-
-    Return:
-        video_con_mas_dias: Video que ha tenido más días de tendencia.
-    """
-
-    size = lt.size(ord_videos)
-
-    video_con_mas_dias = None
-    mas_dias = 1
-
-    i = 1  # Índice 1
-    ii = 2  # Índice 2
-
-    while i <= size and ii <= size:
-
-        video = lt.getElement(ord_videos, i)
-        video['dias_t'] = 1
-
-        if video['video_id'] == lt.getElement(ord_videos, ii)['video_id']:  # Si video tiene el mismo título que el siguiente vídeo.
-
-            while ii <= size and (video['video_id'] == lt.getElement(ord_videos, ii)['video_id']):  # Mientras el siguiente vídeo tenga el mismo título.
+            while ii <= size and (video[llave] == lt.getElement(ord_videos, ii)[llave]):  # Mientras el siguiente vídeo tenga el mismo título.
                 video['dias_t'] += 1
                 ii += 1  # El índice 2 va aumentando.
 
@@ -442,10 +406,11 @@ def cmpVideosByID(video1, video2):
 
 
 
-def sortVideos(catalog):
+def sortVideos(catalog, cmp: int):
     """
     Args:
         catalog: Catálogo ordenado según los Títulos
+        cmp: (1) cmpVideosByViews (2) cmpVideosByTitle (3) cmpVideosByID (4) cmpVideosByLikes
 
     Return:
         list: Lista ordenada de acuerdo a los parámetros.
@@ -454,45 +419,16 @@ def sortVideos(catalog):
     sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
     sub_list = sub_list.copy()
 
-    sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
-
-    return sorted_list
-
-
-
-
-def sortByTitle(catalog):
-
-    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
-
-    sub_list = sub_list.copy()
-
-    sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByTitle)
-
-    return sorted_list
-
-
-
-
-def sortByID(catalog):
-
-    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
-
-    sub_list = sub_list.copy()
-
-    sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByID)
-
-    return sorted_list
-
-
-
-
-def sortByLikes(catalog):
-
-    sub_list = lt.subList(catalog['videos'], 1, lt.size(catalog['videos']))
-
-    sub_list = sub_list.copy()
-
-    sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByLikes)
+    if cmp == 1:
+        sorted_list = mergesort.sort(sub_list, cmpVideosByViews)
+    
+    elif cmp == 2:
+        sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByTitle)
+    
+    elif cmp == 3:
+        sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByID)
+    
+    else:
+        sorted_list = mergesort.sort(lst=sub_list, lessfunction=cmpVideosByLikes)
 
     return sorted_list

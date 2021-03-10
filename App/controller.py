@@ -120,54 +120,16 @@ def loadVideos(catalog):
 
 
 
-def sortVideos(catalog):
+def sortVideos(catalog, cmp: int):
     """
     Args:
         catalog: Catálogo de videos.
+        cmp: (1) cmpVideosByViews (2) cmpVideosByTitle (3) cmpVideosByID (4) cmpVideosByLikes
 
     Return:
         list: Ordena los vídeos según sus views.
     """
-    return model.sortVideos(catalog)
-
-
-
-
-def sortByTitle(catalog):
-    """
-    Args:
-        catalog: Catálogo de videos.
-
-    Return:
-        list: Ordena los vídeos según el título del video.
-    """
-    return model.sortByTitle(catalog)
-
-
-
-
-def sortByLikes(catalog):
-    """
-    Args:
-        catalog: Catálogo de videos.
-
-    Return:
-        list: Ordena los vídeos según el número de likes.
-    """
-    return model.sortByLikes(catalog)
-
-
-
-
-def sortByID(catalog):
-    """
-    Args:
-        catalog: Catálogo de videos.
-
-    Return:
-        list: Ordena los vídeos según su ID.
-    """
-    return model.sortByID(catalog)
+    return model.sortVideos(catalog, cmp)
 
 
 
@@ -237,29 +199,16 @@ def getVideosByTag(catalog, tag):
 
 
 
-def masDiasTrending(catalog):
+def masDiasTrending(catalog, llave: int):
     """
     Args:
         catalog: Catálogo ordenado según los Títulos
+        llave: (1) 'title' o (2) 'video_id'
 
     Return:
         video_mayor_dias: Video que ha tenido más días de tendencia.
     """
-    catalog = model.masDiasTrending(catalog)
-    return catalog
-
-
-
-
-def masDiasTrendingID(catalog):
-    """
-    Args:
-        catalog: Catálogo ordenado según los Títulos
-
-    Return:
-        video_mayor_dias: Video que ha tenido más días de tendencia.
-    """
-    catalog = model.masDiasTrendingID(catalog)
+    catalog = model.masDiasTrending(catalog, llave)
     return catalog
 
 
