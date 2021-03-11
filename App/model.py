@@ -22,7 +22,7 @@
  * Contribuciones:
  *
  * Dario Correal - Version inicial
- """
+"""
 
 import datetime  # Se importa para que al imprimir información de los vídeos aparezca como una fecha legible.
 import config as cf
@@ -292,10 +292,11 @@ def masDiasTrending(ord_videos, llave=2):
 
 
 
-def quitarCopiasLikes(ord_videos, size):
+def quitarCopiasLikes(ord_videos, size):  # Carlos dijo que no era necesario quitar las copias
     """
     Args:
         ord_videos: catálogo de videos ordenados.
+        size: videos que se van a imprimir en el view, ayuda a no recorrer todo ord_videos
 
     Return:
         list: Lista donde solo se incluya cada video que aparezca más de unna vez, dejando así el que mas likes tenga.
